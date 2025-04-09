@@ -20,6 +20,8 @@ alias hy="hyfetch"
 
 alias cd="z"
 
+alias vim="nvim"
+
 #
 # Git
 #
