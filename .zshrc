@@ -10,10 +10,13 @@ autoload -Uz compinit
 compinit
 
 #
-# Locale
+# Exports
 #
 
 export LANG=en_US.UTF-8
+
+# Paths
+PATH=$PATH:~/.local/bin 
 
 #
 # Execution
@@ -38,3 +41,4 @@ fi
 eval "$(starship init zsh)"
 eval "$(atuin init zsh --disable-up-arrow)"
 eval "$(zoxide init zsh)"
+#eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/themes/M365Princess.omp.json)"
