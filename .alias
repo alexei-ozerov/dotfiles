@@ -2,7 +2,7 @@
 # WSL2
 #
 
-wslc="rm pulse && rm wayland-0*"
+alias wslc="rm pulse && rm wayland-0*"
 
 #
 # Common Utilities
