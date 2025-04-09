@@ -5,6 +5,12 @@
 alias wslc="rm pulse && rm wayland-0*"
 
 #
+# Common Commands
+#
+
+alias src="source ~/.zshrc"
+
+#
 # Common Utilities
 #
 
