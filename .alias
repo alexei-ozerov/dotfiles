@@ -1,4 +1,10 @@
 #
+# WSL2
+#
+
+wslc="rm pulse && rm wayland-0*"
+
+#
 # Common Utilities
 #
 
