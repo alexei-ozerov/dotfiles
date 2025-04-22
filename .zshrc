@@ -5,9 +5,10 @@
 bindkey -v
 
 zstyle :compinstall filename '/home/ozerova/.zshrc'
-
 autoload -Uz compinit
 compinit
+
+#source /usr/share/zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
 #
 # Exports
@@ -17,6 +18,7 @@ export LANG=en_US.UTF-8
 
 # Paths
 PATH=$PATH:~/.local/bin 
+PATH=$PATH:~/builds/ols
 
 #
 # Execution
@@ -41,4 +43,6 @@ fi
 eval "$(starship init zsh)"
 eval "$(atuin init zsh --disable-up-arrow)"
 eval "$(zoxide init zsh)"
-#eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/themes/M365Princess.omp.json)"
+eval "$(direnv hook zsh)"
+eval "$(keychain --agents ssh --eval ./.ssh/github-alexei-ozerov)"
+

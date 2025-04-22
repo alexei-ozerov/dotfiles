@@ -10,7 +10,11 @@ $git_status\
 $cmd_duration\
 $line_break\
 $python\
+$direnv\
 $character"""
+
+[direnv]
+disabled = false
 
 [directory]
 style = "blue"

@@ -1,0 +1,18 @@
+[language-server]
+ols = { command = "ols", args = [] }
+
+[[language]]
+name = "odin"
+auto-format = true
+scope = "scope.odin"
+file-types = ["odin"]
+roots = ["ols.json"]
+language-servers = ["ols"]
+comment-token = "//"
+indent = { tab-width = 2, unit = " " }
+injection-regex = "odin"
+formatter = { command = "odinfmt", args = ["-stdin", "true"] }
+
+[[grammar]]
+name = "odin"
+source = { git = "https://github.com/amaanq/tree-sitter-odin" }
