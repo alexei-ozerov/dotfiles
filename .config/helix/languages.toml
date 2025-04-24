@@ -3,8 +3,7 @@ ols = { command = "ols", args = [] }
 
 [[language]]
 name = "odin"
-auto-format = true
-scope = "scope.odin"
+scope = "scope.odin"                                           # "source.odin"
 file-types = ["odin"]
 roots = ["ols.json"]
 language-servers = ["ols"]
