@@ -15,6 +15,7 @@ compinit
 #
 
 export LANG=en_US.UTF-8
+export XDG_CONFIG_HOME=~/.config
 
 # Paths
 PATH=$PATH:~/.local/bin 

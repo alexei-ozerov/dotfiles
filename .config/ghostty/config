@@ -42,4 +42,11 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
-theme = catppuccin-macchiato
+theme = catppuccin-frappe
+background-opacity = 1
+
+font-size = 14
+shell-integration = zsh
+window-padding-balance = true
+window-padding-y = 20,2
+
