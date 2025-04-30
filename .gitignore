@@ -1,1 +1,9 @@
 .config/go/telemetry
+
+.emacs.d/custom.el
+.emacs.d/elpa
+.emacs.d/history
+.emacs.d/projects
+.emacs.d/transient
+.emacs.d/eln-cache
+.emacs.d/auto-save-list

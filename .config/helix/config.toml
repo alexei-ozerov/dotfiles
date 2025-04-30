@@ -1,4 +1,14 @@
-theme = "catppuccin_frappe"
+theme = "catppuccin_mocha"
+
+[editor]
+line-number = "relative"
 
 [keys.insert]
 j = { k = "normal_mode" } # Maps `jk` to exit insert mode
+
+[editor.whitespace.render]
+space = "none"
+tab = "none"
+nbsp = "none"
+nnbsp = "none"
+newline = "none"
