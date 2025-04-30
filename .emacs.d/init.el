@@ -1,36 +1,44 @@
 ;; Alexei Ozerov Emacs Configuration
 
+;; Add Exec Path
+(add-to-list 'exec-path "~/.cargo/bin")
+(add-to-list 'exec-path "~/builds/ols")
+(add-to-list 'exec-path "~/go/bin")
+
+;; Load Emacs Local Modes
+(add-to-list 'load-path "~/.emacs.local/")
+
+;; ef-themes: https://protesilaos.com/emacs/ef-themes-pictures
+(add-to-list 'load-path "~/.emacs.local/ef-themes")
+
 ;; General Configuration
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
 (tool-bar-mode 0)
+(global-display-line-numbers-mode)
+
+(setq display-line-numbers 'relative)
+
+(global-auto-revert-mode t)
+
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'forward)
+(setq backup-directory-alist `(("." . "~/.saves")))
+(setq auto-save-file-name-transforms `((".*" "~/.saves/" t)))
+(setq custom-file (locate-user-emacs-file "custom.el"))
+(when (file-exists-p custom-file)
+  (load custom-file))
 
 ;; Disable Splash Screen
 (setq inhibit-startup-message t) 
 (setq initial-scratch-message nil)
 
+;; Configure Spaces
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+
 ;; Set Font & Size
-(set-frame-font "Iosevka NF 28" nil t)
-
-;; Auto-refresh buffers when files on disk change.
-(global-auto-revert-mode t)
-
-;; Ensure unique names when matching files exist in the buffer.
-;; e.g. This helps when you have multiple copies of "main.rs"
-;; open in different projects. It will add a "myproj/main.rs"
-;; prefix when it detects matching names.
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'forward)
-
-;; Place backups in a separate folder.
-(setq backup-directory-alist `(("." . "~/.saves")))
-(setq auto-save-file-name-transforms `((".*" "~/.saves/" t)))
-
-;; I store automatic customization options in a gitignored file,
-;; but this is definitely a personal preference.
-(setq custom-file (locate-user-emacs-file "custom.el"))
-(when (file-exists-p custom-file)
-  (load custom-file))
+(set-frame-font "Iosevka NF 18" nil t)
 
 ;; Optimizations
 (setq gc-cons-threshold 100000000) ; 100 mb
@@ -48,6 +56,53 @@
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
+
+;; Org Mode
+(use-package org-bullets :ensure t)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(setq org-hide-leading-stars t)
+(setq org-src-fontify-natively t)
+(global-prettify-symbols-mode t)
+
+
+;; eVIl Mode
+(use-package evil 
+  :init
+  :ensure t 
+  :init
+  (evil-mode))
+
+(use-package evil-collection
+  :ensure t
+  :after evil)
+
+(use-package evil-surround
+  :ensure t
+  :config
+  (global-evil-surround-mode 1))
+
+(use-package evil-org
+  :ensure t
+  :after org
+  :config
+  (add-hook 'org-mode-hook 'evil-org-mode)
+  (add-hook 'evil-org-mode-hook
+        (lambda () (evil-org-set-key-theme)))
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
+
+;; Magit
+(use-package magit
+  :bind
+  ("C-x g" . magit-status)  :config
+  (use-package evil-magit)
+  (use-package with-editor)
+  (setq magit-push-always-verify nil)
+  (setq git-commit-summary-max-length 50)  (with-eval-after-load 'magit-remote
+    (magit-define-popup-action 'magit-push-popup ?P
+      'magit-push-implicitly--desc
+      'magit-push-implicitly ?p t))  (add-hook 'with-editor-mode-hook 'evil-insert-state))
+
 ;; Minibuffer Customization
 (use-package vertico
   :ensure t
@@ -64,11 +119,19 @@
   :init
   (savehist-mode))
 
-(use-package evil 
+;; Fonts
+(use-package nerd-icons
   :init
-  :ensure t 
-  :init
-  (evil-mode))
+  :ensure t)
+
+;; Autocomplete
+(use-package company
+  :ensure t
+  :hook (after-init . global-company-mode))
+
+;; Language Modes
+(use-package go-mode
+  :ensure t)
 
 (use-package terraform-mode
   :ensure t
@@ -78,12 +141,18 @@
     ;; if you want to use outline-minor-mode
     ;; (outline-minor-mode 1)
     )
-
   (add-hook 'terraform-mode-hook 'my-terraform-mode-init))
 
+(use-package eglot
+  :init
+  :ensure t)
+
+(use-package eglot-booster
+    :ensure t
+	:after eglot
+	:config	(eglot-booster-mode))
+
 ;; Local Emacs Packages 
-;; ef-themes: https://protesilaos.com/emacs/ef-themes-pictures
-(add-to-list 'load-path "~/.emacs.local/ef-themes")
 (require 'ef-themes)
 
 ;; If you like two specific themes and want to switch between them, you
@@ -126,7 +195,6 @@
 (global-set-key (kbd "C-j")  'windmove-down)
 
 ;; Simple C Mode
-(add-to-list 'load-path "~/.emacs.local/")
 (require 'simpc-mode)
 (add-to-list 'auto-mode-alist '("\\.[hc]\\(pp\\)?\\'" . simpc-mode))
 
@@ -141,3 +209,12 @@
      nil
      t)
     (goto-line saved-line-number))))
+
+;; Require
+(require 'odin-mode)
+(require 'company-go)
+(require 'go-mode)
+
+;; Eglot Odin Config
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs '((odin-mode odin-ts-mode) . ("ols"))))
