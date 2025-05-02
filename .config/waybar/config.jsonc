@@ -11,9 +11,9 @@
 		"pulseaudio",
 		"backlight",
 		"battery",
-		// "clock",
-		"custom/lock",
-		"custom/power"
+		"clock"
+		// "custom/lock",
+		// "custom/power"
 	],
 	"hyprland/workspaces": {
 		"on-click": "activate",
@@ -41,9 +41,9 @@
 	},
 	"clock": {
 		"timezone": "America/Toronto",
-		"tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-		"format-alt": " {:%d/%m/%Y}",
-		"format": " {:%H:%M}"
+		// "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+		"format-alt": "  {:%d/%m/%Y}",
+		"format": "  {:%H:%M}"
 	},
 	"backlight": {
 		"device": "nvidia_0",
