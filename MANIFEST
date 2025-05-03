@@ -1,5 +1,10 @@
 # START MANIFEST
 # Dotfile Symlink Manifest File
 .emacs.d|active|backup|${HOME}
-.emacs.local|active|overwrite|${HOME}/
+.emacs.local|active|overwrite|${HOME}
+.alias|active|overwrite|${HOME}
+.config|active|overwrite|${HOME}
+.wsl2|active|overwrite|${HOME}
+.bashrc|inactive|backup|${HOME}
+.zshrc|inactive|backup|${HOME}
 # END MANIFEST
