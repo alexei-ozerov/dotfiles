@@ -4,7 +4,7 @@ set mouse=a
 " Set Editor Font
 if exists(':GuiFont')
     " Use GuiFont! to ignore font errors
-    GuiFont! JetBrainsMono Nerd Font Mono:h10
+    GuiFont! Iosevka Nerd Font Mono:h18
 endif
 
 " Disable GUI Tabline

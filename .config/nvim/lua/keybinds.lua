@@ -130,7 +130,7 @@ keymap("n", "<S-h>", "<cmd>bprevious<cr>", { desc = 'Previous Buffer' })
 keymap("n", "<TAB>", "<C-^>", { desc = "Alternate buffers" })
 -- Format Buffer
 -- With and without LSP
-if vim.tbl_isempty(vim.lsp.buf_get_clients()) then
+if vim.tbl_isempty(vim.lsp.get_clients()) then
     keymap("n", "<leader>bf", function() vim.lsp.buf.format() end,
         { desc = 'Format Buffer' })
 else
