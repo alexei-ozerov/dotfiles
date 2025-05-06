@@ -29,85 +29,6 @@ require("mini.deps").setup({ path = { package = path_package } })
 
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
-
---          ╭─────────────────────────────────────────────────────────╮
---          │                     Neovim Plugins                      │
---          ╰─────────────────────────────────────────────────────────╯
-
---     Neotree
-add({
-    source = 'nvim-neo-tree/neo-tree.nvim',
-    depends = {
-        "nvim-lua/plenary.nvim",
-        "nvim-tree/nvim-web-devicons",
-        "MunifTanjim/nui.nvim",
-    }
-})
-
---     Pywal16 Theme
-
-add({
-    source = 'uZer/pywal16.nvim'
-})
-local pywal16 = require('pywal16')
-pywal16.setup()
-
---     Zenbones Theme
-add({
-   source = "zenbones-theme/zenbones.nvim",
-   depends = {
-       "rktjmp/lush.nvim"
-   }
-})
-
---     Treesitter 
-add({
-    source = 'nvim-treesitter/nvim-treesitter'
-})
-
-require'nvim-treesitter.configs'.setup {
-  -- A list of parser names, or "all" (the listed parsers MUST always be installed)
-  ensure_installed = { "c", "lua", "vim", "vimdoc", "rust", "markdown", "markdown_inline", "c", "java", "go" },
-
-  -- Install parsers synchronously (only applied to `ensure_installed`)
-  sync_install = false,
-
-  -- Automatically install missing parsers when entering buffer
-  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-  auto_install = true,
-
-  -- List of parsers to ignore installing (or "all")
-  ignore_install = { "javascript" },
-
-  ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
-  -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
-
-  highlight = {
-    enable = true,
-
-    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
-    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
-    -- the name of the parser)
-    -- list of language that will be disabled
-    disable = {},
-    -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
-    disable = function(lang, buf)
-        local max_filesize = 100 * 1024 -- 100 KB
-        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-        if ok and stats and stats.size > max_filesize then
-            return true
-        end
-    end,
-
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    additional_vim_regex_highlighting = false,
-  },
-}
-
-
 --          ╭─────────────────────────────────────────────────────────╮
 --          │                     Neovim Options                      │
 --          ╰─────────────────────────────────────────────────────────╯
@@ -133,8 +54,6 @@ now(function()
     vim.o.tags = vim.o.tags .. ",/home/aozerov/.config/nvim/tags"
     -- don't save blank buffers to sessions (like neo-tree, trouble etc.)
     vim.opt.sessionoptions:remove('blank')
-
-    vim.cmd("colorscheme zenbones")
 end)
 
 --          ╭─────────────────────────────────────────────────────────╮
@@ -178,34 +97,6 @@ later(function()
         },
     })
 end)
-
---          ┌─────────────────────────────────────────────────────────┐
---                Disabled Here. We use randomhue as the colorscheme
---                     You can enable this by uncommenting.
---                We provide a basic Catppuccin Colorscheme here
---          └─────────────────────────────────────────────────────────┘
--- later(function()
---     require('mini.base16').setup({
---         palette = {
---             base00 = '#1e1e2e',
---             base01 = '#181825',
---             base02 = '#313244',
---             base03 = '#45475a',
---             base04 = '#585b70',
---             base05 = '#cdd6f4',
---             base06 = '#f5e0dc',
---             base07 = '#b4befe',
---             base08 = '#f38ba8',
---             base09 = '#fab387',
---             base0A = '#f9e2af',
---             base0B = '#a6e3a1',
---             base0C = '#94e2d5',
---             base0D = '#89b4fa',
---             base0E = '#cba6f7',
---             base0F = '#f2cdcd'
---         }
---     })
--- end)
 
 later(function()
     require("mini.basics").setup({
@@ -574,6 +465,6 @@ require("box")
 --                                    Ignore
 --          └─────────────────────────────────────────────────────────┘
 local path_modules = vim.fn.stdpath("config") .. "/lua/"
-if vim.uv.fs_stat(path_modules .. "work.lua") then
-    require("work")
+if vim.uv.fs_stat(path_modules .. "user-plugins.lua") then
+    require("user-plugins")
 end
