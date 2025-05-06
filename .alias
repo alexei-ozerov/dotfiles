@@ -23,7 +23,7 @@ alias lt="eza --tree"
 alias y="yazi"
 alias hy="hyfetch"
 alias cd="z"
-alias vim="helix"
+alias v="nvim"
 alias hx="helix"
 
 #
