@@ -40,3 +40,8 @@ end)
 add({
     source = 'neovim/nvim-lspconfig'
 })
+
+-- Rustacean
+add({
+    source = 'mrcjkb/rustaceanvim'
+})
