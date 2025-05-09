@@ -2,7 +2,7 @@ return {
     -- Theme
     {
         "EdenEast/nightfox.nvim",
-        modules = {'neotree'}
+        modules = { 'neotree' }
     },
     -- Treesitter
     {
@@ -102,5 +102,17 @@ return {
             fuzzy = { implementation = "prefer_rust_with_warning" }
         },
         opts_extend = { "sources.default" }
+    },
+    -- Popups
+    {
+        "folke/noice.nvim",
+        event = "VeryLazy",
+        opts = {
+            -- add any options here
+        },
+        dependencies = {
+            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+            "MunifTanjim/nui.nvim",
+        }
     }
 }
