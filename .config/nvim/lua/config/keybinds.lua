@@ -19,6 +19,10 @@ keymap("n", "ö", ":")
 keymap("i", "<C-S-v>", "<C-r><C-o>*", { desc = 'Paste from System in Insertmode' })
 keymap("n", "<S-Insert>", "p", { desc = 'Remap Paste for CopyQ' })
 keymap("i", "<S-Insert>", "<C-R>+", { desc = 'Remap Paste for CopyQ' })
+keymap("n", "<leader>ff", function() require('mini.pick').builtin.files() end,
+    { desc = 'Find File' })
+keymap("n", "<leader>fg", function() require('mini.pick').builtin.grep_live() end,
+    { desc = 'Find String' })
 
 -- ╔══════════════════════╗
 -- ║    Buffer Keymaps    ║
@@ -100,7 +104,7 @@ keymap("n", "<leader>e", function()
             require('mini.files').open(vim.api.nvim_buf_get_name(0))
         end
     end,
-    { desc = 'Dired' })
+    { desc = ' Dired' })
 
 --  ─( Trying a "Center Code" Keymap )──────────────────────────────────
 keymap("n", "<leader>uc", function()

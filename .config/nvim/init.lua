@@ -23,6 +23,7 @@ require("mini.icons").setup()
 require("mini.notify").setup()
 require("mini.tabline").setup()
 require("mini.files").setup()
+require("mini.pick").setup()
 -- require("mini.indentscope").setup()
 
 -- Additional Configuration
