@@ -57,6 +57,26 @@ keymap("n", "<leader>lf", function()
     vim.diagnostic.setqflist({ open = true })
 end, { desc = "LSP Quickfix" })
 
+-- ╔═══════════════════════╗
+-- ║    Session Keymaps    ║
+-- ╚═══════════════════════╝
+keymap("n", "<leader>ss", function()
+    vim.cmd('wa')
+    require('mini.sessions').write()
+    require('mini.sessions').select()
+end, { desc = 'Switch Session' })
+keymap("n", "<leader>sw", function()
+    local cwd = vim.fn.getcwd()
+    local last_folder = cwd:match("([^/]+)$")
+    require('mini.sessions').write(last_folder)
+end, { desc = 'Save Session' })
+keymap("n", "<leader>sf", function()
+        vim.cmd('wa')
+        require('mini.sessions').select()
+    end,
+    { desc = 'Load Session' })
+
+
 -- ╔══════════════════╗
 -- ║    UI Keymaps    ║
 -- ╚══════════════════╝
