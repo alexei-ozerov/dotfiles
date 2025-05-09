@@ -25,6 +25,7 @@ require("mini.tabline").setup()
 require("mini.files").setup()
 require("mini.pick").setup()
 require("mini.sessions").setup()
+require("mini.snippets").setup()
 -- require("mini.indentscope").setup()
 
 -- Additional Configuration
