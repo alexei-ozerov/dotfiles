@@ -1,30 +1,26 @@
-require("plugins/deps")
-local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
+require("config.options")        -- Set default options
+require("config.lazy")           -- Load LazyNvim & Plugins
+require("config.keybinds")       -- Set Keybindings
 
---          ╔═════════════════════════════════════════════════════════╗
---          ║                          MVIM                           ║
---          ╚═════════════════════════════════════════════════════════╝
+--     MINI.NVIM
+require("config.mini-starter")   -- Load Mini.Starter
 
-require("config/options")       -- Set basic NeoVim configurations
-require("plugins/neovide")      -- Configure Neovide 
-require("plugins/clue")         -- Configure Mini.Clue
-require("plugins/essentials")   -- Configure essentials (Align, Animate, Basics, Bracketed, 
-                                --      Bufremove, Colors, Comment, Completion, CursorWord, 
-                                --      Doc, Extra, Files)
-require("plugins/patterns")     -- Pattern matching for highlighting and redacting passwords
-require("plugins/todo")         -- TODO: Complete sorting this later
-require("plugins/starter")      -- TODO: Review what this is
-require("plugins/treesitter")   -- Enable treesitter
+require("mini.align").setup()
+require("mini.bracketed").setup()
+require("mini.bufremove").setup()
+require("mini.comment").setup()
+require("mini.cursorword").setup()
+require("mini.extra").setup()
+require("mini.doc").setup()
+require("mini.statusline").setup()
 
-require("autocmds")
-require("filetypes")
-require("highlights")
-require("keybinds")
-require("user-plugins")
+require("config.mini-basics")    -- Load various Mini Modules
+require("config.mini-animate")
+require("config.mini-completion")
+require("config.mini-diff")
+require("config.mini-move")      -- Load Mini.Move (buffer manipulation)
+require("config.mini-clue")      -- Load Mini.Clue (hints)
+require("config.mini-pairs")     -- Load Mini.Pairs (auto pairs)
 
---          ╔═════════════════════════════════════════════════════════╗
---          ║                          LSP                            ║
---          ╚═════════════════════════════════════════════════════════╝
-
-vim.lsp.enable("lua_ls")
---vim.lsp.enable("rust_analyzer")
+--     TREESITTER
+require("config.treesitter")
