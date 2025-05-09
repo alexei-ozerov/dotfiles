@@ -91,7 +91,17 @@ keymap("n", "<leader>tt", "<cmd>Neotree toggle<cr>", { desc = 'Neotree' })
 --         reveal_force_cwd = true,
 --     })
 -- end, { desc = 'Neotree' })
---
+
+keymap("n", "<leader>e", function()
+        local buffer_name = vim.api.nvim_buf_get_name(0)
+        if buffer_name == "" or string.match(buffer_name, "Starter") then
+            require('mini.files').open(vim.loop.cwd())
+        else
+            require('mini.files').open(vim.api.nvim_buf_get_name(0))
+        end
+    end,
+    { desc = 'Dired' })
+
 --  ─( Trying a "Center Code" Keymap )──────────────────────────────────
 keymap("n", "<leader>uc", function()
     local margin = vim.api.nvim_create_buf(false, true)
