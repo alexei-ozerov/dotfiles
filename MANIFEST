@@ -9,8 +9,10 @@
 .config/helix|active|overwrite|${HOME}
 .config/hyfetch.json|active|overwrite|${HOME}
 .config/starship.toml|active|overwrite|${HOME}
+.config/qutebrowser|active|overwrite|${HOME}
 .wsl2|inactive|overwrite|${HOME}
 .alias|active|overwrite|${HOME}
 .bashrc|inactive|backup|${HOME}
 .zshrc|inactive|backup|${HOME}
+.zprofile|active|overwrite|${HOME}
 # END MANIFEST

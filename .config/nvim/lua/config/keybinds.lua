@@ -14,6 +14,7 @@ end
 -- ╔═══════════════════════╗
 -- ║    General Keymaps    ║
 -- ╚═══════════════════════╝
+keymap("i", "jk", "<Esc>")
 keymap("n", "<leader>q", "<cmd>wqa<cr>", { desc = 'Quit' })
 keymap("n", "ö", ":")
 keymap("i", "<C-S-v>", "<C-r><C-o>*", { desc = 'Paste from System in Insertmode' })

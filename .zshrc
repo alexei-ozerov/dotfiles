@@ -2,7 +2,7 @@
 # ZSH
 #
 
-bindkey -v
+#bindkey -v
 
 zstyle :compinstall filename '/home/ozerova/.zshrc'
 autoload -Uz compinit
@@ -28,6 +28,14 @@ PATH=$PATH:~/.cargo/bin
 source .alias
 
 #
+# Tmux Autoload
+#
+
+# if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+#   exec tmux -u
+# fi
+
+#
 # Configure Tooling
 #
 
@@ -37,3 +45,5 @@ eval "$(zoxide init zsh)"
 eval "$(direnv hook zsh)"
 eval "$(keychain --agents ssh --eval ./.ssh/github.alexei-ozerov)"
 
+# Set Theme
+wal -i downloads/wal.jpg

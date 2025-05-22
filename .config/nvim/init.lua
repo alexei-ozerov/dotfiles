@@ -32,7 +32,7 @@ require("mini.snippets").setup()
 -- Look under ./lua/config/mini/.
 require("config.mini.basics")           -- Load Mini.Basics (defaults)
 require("config.mini.animate")          -- Load Mini.Animate (basic animations)
-require("config.mini.completion")       -- Load Mini.Completion (completion library)
+-- require("config.mini.completion")       -- Load Mini.Completion (completion library)
 require("config.mini.diff")             -- Load Mini.Diff (diff gutter status)
 require("config.mini.move")             -- Load Mini.Move (buffer manipulation)
 require("config.mini.clue")             -- Load Mini.Clue (hints)

@@ -24,21 +24,3 @@ require("mini.basics").setup({
         relnum_in_visual_mode = true,
     },
 })
-
-require("mini.completion").setup({
-    mappings = {
-        go_in = "<RET>",
-    },
-    window = {
-        info = { border = "solid" },
-        signature = { border = "solid" },
-    },
-})
-
-require("mini.diff").setup({
-    view = {
-        style = "sign",
-        signs = { add = "█", change = "▒", delete = "" },
-    },
-})
-
