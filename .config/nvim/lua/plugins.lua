@@ -1,8 +1,16 @@
 return {
     -- Theme
+    { "theacodes/witchhazel" },
     {
         "EdenEast/nightfox.nvim",
-        modules = { 'neotree' }
+        modules = { 'neotree' },
+        opts = {
+          transparent = true,
+          styles = {
+             sidebars = "transparent",
+             floats = "transparent",
+          },
+       },
     },
     -- Treesitter
     {
@@ -40,6 +48,7 @@ return {
             servers = {
                 lua_ls = {},
                 rust_analyzer = {},
+                clojure_lsp = {},
             }
         },
         config = function(_, opts)
@@ -47,7 +56,7 @@ return {
             for server, config in pairs(opts.servers) do
                 -- passing config.capabilities to blink.cmp merges with the capabilities in your
                 -- `opts[server].capabilities, if you've defined it
-                config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
+                -- config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
                 lspconfig[server].setup(config)
             end
         end
