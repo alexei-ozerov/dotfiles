@@ -6,7 +6,9 @@ require("plugins")
 require("config.keybinds")                      -- Set Keybindings
 
 vim.opt.termguicolors = true                    -- Set Color Opt
-vim.cmd("colorscheme witchhazel-hypercolor")    -- Set Colorscheme
+-- vim.cmd("colorscheme witchhazel-hypercolor")    -- Set Colorscheme
+-- vim.cmd("colorscheme nightfox")         -- Set Colorscheme
+vim.cmd("colorscheme pywal16")
 
 --     MINI.NVIM
 require("config.mini.starter")                  -- Load Mini.Starter
