@@ -1,7 +1,8 @@
-theme = catppuccin-mocha
-font-size = 14
+theme = catppuccin-mocha.conf
 shell-integration = zsh
 window-padding-balance = true
 window-padding-y = 20
 window-padding-x = 20
-
+background-opacity = 0.8 
+font-family = "Iosevka Nerd Font Mono" 
+font-size = 14

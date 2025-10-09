@@ -2,23 +2,11 @@ return {
     -- Theme
     { "theacodes/witchhazel" },
     {
-        "EdenEast/nightfox.nvim",
-        modules = { 'neotree' },
-        opts = {
-          transparent = true,
-          styles = {
-             sidebars = "transparent",
-             floats = "transparent",
-          },
-       },
-    },
-    {
       'uZer/pywal16.nvim',
       config = function()
         vim.cmd.colorscheme("pywal16")
       end,
     },
-
     -- Treesitter
     {
         "nvim-treesitter/nvim-treesitter",
@@ -40,6 +28,9 @@ return {
             -- fill any relevant options here
         },
     },
+    {
+        'nvim-telescope/telescope.nvim', tag = '0.1.8',
+    },
     -- Mini Nvim
     {
         'echasnovski/mini.nvim',
@@ -56,6 +47,8 @@ return {
                 lua_ls = {},
                 rust_analyzer = {},
                 clojure_lsp = {},
+                gopls = {},
+                ols = {},
             }
         },
         config = function(_, opts)

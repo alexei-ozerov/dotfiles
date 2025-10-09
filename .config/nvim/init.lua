@@ -6,8 +6,7 @@ require("plugins")
 require("config.keybinds")                      -- Set Keybindings
 
 vim.opt.termguicolors = true                    -- Set Color Opt
--- vim.cmd("colorscheme witchhazel-hypercolor")    -- Set Colorscheme
--- vim.cmd("colorscheme nightfox")         -- Set Colorscheme
+vim.opt.guifont = "Iosevka Nerd Font Mono"
 vim.cmd("colorscheme pywal16")
 
 --     MINI.NVIM
@@ -29,6 +28,8 @@ require("mini.files").setup()
 require("mini.pick").setup()
 require("mini.sessions").setup()
 require("mini.snippets").setup()
+require("mini.git").setup()
+require("mini.diff").setup()
 -- require("mini.indentscope").setup()
 
 -- Additional Configuration

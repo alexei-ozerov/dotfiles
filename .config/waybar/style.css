@@ -1,4 +1,5 @@
-@import "frappe.css";
+/* @import "frappe.css"; */
+@import "/home/ozerova/.cache/wal/colors-waybar.css";
 
 * {
   /* reference the color by using @color-name */
