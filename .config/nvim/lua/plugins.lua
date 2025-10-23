@@ -31,64 +31,6 @@ return {
             },
         },
     },
-    {
-      "nvim-java/nvim-java",
-      config = false,
-      dependencies = {
-        {
-          "neovim/nvim-lspconfig",
-          opts = {
-            servers = {
-              jdtls = {
-                settings = {
-                  java = {
-                    configuration = {
-                      runtimes = {
-                        {
-                          name = "Java17",
-                          path = "/home/aozerov/builds/java-17-openjdk-17.0.11.0.9-1.portable.jdk.el.x86_64",
-                        },
-                        {
-                          name = "Java25",
-                          path = "/home/aozerov/builds/jdk-25",
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-            setup = {
-              jdtls = function()
-                require("java").setup({
-                  -- root_markers = {
-                  --   "settings.gradle",
-                  --   "settings.gradle.kts",
-                  --   "pom.xml",
-                  --   "build.gradle",
-                  --   "mvnw",
-                  --   "gradlew",
-                  --   "build.gradle",
-                  --   "build.gradle.kts",
-                  -- },
-                })
-              end,
-            },
-          },
-        },
-      },
-    },
-    {
-        "EdenEast/nightfox.nvim",
-        modules = { 'neotree' },
-        opts = {
-          transparent = true,
-          styles = {
-             sidebars = "transparent",
-             floats = "transparent",
-          },
-       },
-    },
     -- Treesitter
     {
         "nvim-treesitter/nvim-treesitter",
@@ -132,11 +74,9 @@ return {
                     "pylsp",
                     "rust_analyzer",
                     "ts_ls",
+                    "ols",
                 })
             end,
-    },
-    {
-        'nvim-java/nvim-java'
     },
     -- Blink CMP
     {
@@ -206,7 +146,7 @@ return {
                 bottom_search = false, -- use a classic bottom cmdline for search
                 command_palette = true, -- position the cmdline and popupmenu together
                 long_message_to_split = true, -- long messages will be sent to a split
-                lsp_doc_border = false, -- add a border to hover docs and signature help
+                lsp_doc_border = true, -- add a border to hover docs and signature help
               },
         },
         dependencies = {
