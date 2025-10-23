@@ -24,7 +24,6 @@ alias y="yazi"
 alias hy="hyfetch"
 alias cd="z"
 alias v="nvim"
-alias hx="helix"
 
 #
 # Git
@@ -62,3 +61,10 @@ alias kc="kubectx"
 alias kns="kubens"
 alias kl="kubectl logs -f"
 alias ke="kubectl exec -it"
+
+#
+# Jira
+#
+
+alias jsl="jira sprint ls --current"
+alias jil="jira issue list -a$(jira me)"

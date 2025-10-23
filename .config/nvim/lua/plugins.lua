@@ -6,6 +6,88 @@ return {
       config = function()
         vim.cmd.colorscheme("pywal16")
       end,
+  },
+  {
+      "swaits/zellij-nav.nvim",
+      lazy = true,
+      event = "VeryLazy",
+      keys = {
+        { "<c-h>", "<cmd>ZellijNavigateLeftTab<cr>",  { silent = true, desc = "navigate left or tab"  } },
+        { "<c-j>", "<cmd>ZellijNavigateDown<cr>",  { silent = true, desc = "navigate down"  } },
+        { "<c-k>", "<cmd>ZellijNavigateUp<cr>",    { silent = true, desc = "navigate up"    } },
+        { "<c-l>", "<cmd>ZellijNavigateRightTab<cr>", { silent = true, desc = "navigate right or tab" } },
+      },
+      opts = {},
+    },
+    {
+        'williamboman/mason.nvim',
+        opts = {
+            ui = {
+                icons = {
+                    package_installed = '✓',
+                    package_pending = '➜',
+                    package_uninstalled = '✗',
+                },
+            },
+        },
+    },
+    {
+      "nvim-java/nvim-java",
+      config = false,
+      dependencies = {
+        {
+          "neovim/nvim-lspconfig",
+          opts = {
+            servers = {
+              jdtls = {
+                settings = {
+                  java = {
+                    configuration = {
+                      runtimes = {
+                        {
+                          name = "Java17",
+                          path = "/home/aozerov/builds/java-17-openjdk-17.0.11.0.9-1.portable.jdk.el.x86_64",
+                        },
+                        {
+                          name = "Java25",
+                          path = "/home/aozerov/builds/jdk-25",
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+            setup = {
+              jdtls = function()
+                require("java").setup({
+                  -- root_markers = {
+                  --   "settings.gradle",
+                  --   "settings.gradle.kts",
+                  --   "pom.xml",
+                  --   "build.gradle",
+                  --   "mvnw",
+                  --   "gradlew",
+                  --   "build.gradle",
+                  --   "build.gradle.kts",
+                  -- },
+                })
+              end,
+            },
+          },
+        },
+      },
+    },
+    {
+        "EdenEast/nightfox.nvim",
+        modules = { 'neotree' },
+        opts = {
+          transparent = true,
+          styles = {
+             sidebars = "transparent",
+             floats = "transparent",
+          },
+       },
     },
     -- Treesitter
     {
@@ -38,28 +120,23 @@ return {
     },
     -- LSP Config
     {
-        'neovim/nvim-lspconfig',
+        "neovim/nvim-lspconfig",
         dependencies = { 'saghen/blink.cmp' },
-
-        -- example using `opts` for defining servers
-        opts = {
-            servers = {
-                lua_ls = {},
-                rust_analyzer = {},
-                clojure_lsp = {},
-                gopls = {},
-                ols = {},
-            }
-        },
-        config = function(_, opts)
-            local lspconfig = require('lspconfig')
-            for server, config in pairs(opts.servers) do
-                -- passing config.capabilities to blink.cmp merges with the capabilities in your
-                -- `opts[server].capabilities, if you've defined it
-                -- config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
-                lspconfig[server].setup(config)
-            end
-        end
+            config = function()
+                vim.lsp.config("*", {})
+                vim.lsp.enable({
+                    "gopls",
+                    "jdtls",
+                    "kotlin_language_server",
+                    "lua_ls",
+                    "pylsp",
+                    "rust_analyzer",
+                    "ts_ls",
+                })
+            end,
+    },
+    {
+        'nvim-java/nvim-java'
     },
     -- Blink CMP
     {

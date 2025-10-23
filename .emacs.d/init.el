@@ -68,6 +68,10 @@
 (use-package vterm
     :ensure t)
 
+;; Sly
+(use-package sly
+    :ensure t)
+
 ;; eVIl Mode
 (use-package evil 
   :init
