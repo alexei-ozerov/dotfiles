@@ -54,6 +54,29 @@ return {
     },
     {
         'nvim-telescope/telescope.nvim', tag = '0.1.8',
+        dependencies = { 'nvim-lua/plenary.nvim' },
+        defaults = {
+            layout_config = {
+                vertical = { width = 0.8 },
+                horizontal = { width = 0.8 }
+            },
+        },
+        opts = {
+            pickers = {
+                find_files = {
+                    theme = "dropdown"
+                },
+                live_grep = {
+                    theme = "dropdown"
+                },
+                buffers = {
+                    theme = "dropdown"
+                },
+                help_tags = {
+                    theme = "dropdown"
+                }
+            }
+        }
     },
     -- Mini Nvim
     {

@@ -2,7 +2,7 @@
 -- ║    Local Variables    ║
 -- ╚═══════════════════════╝
 local keymap = vim.keymap.set
-
+local builtin = require('telescope.builtin')
 local split_sensibly = function()
     if vim.api.nvim_win_get_width(0) > math.floor(vim.api.nvim_win_get_height(0) * 2.3) then
         vim.cmd("vs")
@@ -20,6 +20,14 @@ keymap("n", "ö", ":")
 keymap("i", "<C-S-v>", "<C-r><C-o>*", { desc = 'Paste from System in Insertmode' })
 keymap("n", "<S-Insert>", "p", { desc = 'Remap Paste for CopyQ' })
 keymap("i", "<S-Insert>", "<C-R>+", { desc = 'Remap Paste for CopyQ' })
+
+-- Telescope
+keymap('n', '<leader>tf', builtin.find_files, { desc = 'Telescope find files' })
+keymap('n', '<leader>tg', builtin.live_grep, { desc = 'Telescope live grep' })
+keymap('n', '<leader>tb', builtin.buffers, { desc = 'Telescope buffers' })
+keymap('n', '<leader>th', builtin.help_tags, { desc = 'Telescope help tags' })
+
+-- Mini Picker
 keymap("n", "<leader>ff", function() require('mini.pick').builtin.files() end,
     { desc = 'Find File' })
 keymap("n", "<leader>fg", function() require('mini.pick').builtin.grep_live() end,
@@ -45,7 +53,7 @@ end
 -- ╔═══════════════════╗
 -- ║    LSP Keymaps    ║
 -- ╚═══════════════════╝
-keymap("n", "<leader>ld", function() vim.lsp.buf.definition() end,
+keymap("n", "gd", function() vim.lsp.buf.definition() end,
     { desc = 'Go To Definition' })
 keymap("n", "<leader>ls", "<cmd>Pick lsp scope='document_symbol'<cr>",
     { desc = 'Show all Symbols' })
