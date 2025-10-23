@@ -24,6 +24,7 @@ alias y="yazi"
 alias hy="hyfetch"
 alias cd="z"
 alias v="nvim"
+alias m="rmpc"
 
 #
 # Git

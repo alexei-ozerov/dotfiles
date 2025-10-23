@@ -13,8 +13,8 @@
 /* } */
 
 * {
-  font-family: "Maple Mono NF";
-  font-size: 18px;
+  font-family: "Iosevka Mono NF";
+  font-size: 14px;
   min-height: 0;
 }
 
@@ -63,7 +63,7 @@
 #clock {
   color: @blue;
   border-radius: 0px 1rem 1rem 0px;
-  margin-right: 1rem;
+  margin-right: 0rem;
 }
 
 #battery {

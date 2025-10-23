@@ -26,8 +26,8 @@
 		}
 	},
 	"tray": {
-		"icon-size": 11,
-		"spacing": 10
+		"icon-size": 6,
+		"spacing": 8
 	},
 	"custom/music": {
 		"format": "  {}",
@@ -39,8 +39,9 @@
 		"max-length": 50
 	},
 	"clock": {
+        "interval": 1,
 		"timezone": "America/Toronto",
-		"format": "{:%H:%M}"
+		"format": "{:%m/%d/%Y %H:%M:%S}"
 	},
 	"backlight": {
 		"device": "nvidia_0",

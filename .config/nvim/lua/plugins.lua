@@ -1,5 +1,6 @@
 return {
     -- Theme
+    { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
     { "theacodes/witchhazel" },
     {
       'uZer/pywal16.nvim',

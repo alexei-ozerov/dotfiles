@@ -9,6 +9,8 @@ vim.opt.termguicolors = true                    -- Set Color Opt
 vim.opt.guifont = "Iosevka Nerd Font Mono"
 vim.cmd("colorscheme pywal16")
 vim.uv.os_setenv("JAVA_HOME",  "/home/aozerov/builds/jdk-25")
+-- vim.cmd("colorscheme pywal16")
+vim.cmd("colorscheme catppuccin-mocha")
 
 --     MINI.NVIM
 require("config.mini.starter")                  -- Load Mini.Starter
