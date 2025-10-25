@@ -20,6 +20,7 @@ alias la="eza -la"
 alias l="eza -l"
 alias lt="eza --tree"
 
+alias hx="helix"
 alias y="yazi"
 alias hy="hyfetch"
 alias cd="z"
@@ -62,10 +63,3 @@ alias kc="kubectx"
 alias kns="kubens"
 alias kl="kubectl logs -f"
 alias ke="kubectl exec -it"
-
-#
-# Jira
-#
-
-alias jsl="jira sprint ls --current"
-alias jil="jira issue list -a$(jira me)"
