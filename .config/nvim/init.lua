@@ -12,6 +12,21 @@ vim.uv.os_setenv("JAVA_HOME",  "/home/aozerov/builds/jdk-25")
 -- vim.cmd("colorscheme pywal16")
 vim.cmd("colorscheme catppuccin-mocha")
 
+-- TODO (ozerova): Move this to another file at some point.
+-- Configure Guard Auto-Format/Auto-Lint
+vim.g.guard_config = {
+    fmt_on_save = true,
+    lsp_as_default_formatter = false,
+    save_on_fmt = true,
+    auto_lint = true,
+    lint_interval = 500,
+    refresh_diagnostic = true
+}
+
+local ft = require('guard.filetype')
+ft("c,cpp,json"):fmt("clang-format")
+
+
 --     MINI.NVIM
 require("config.mini.starter")                  -- Load Mini.Starter
 

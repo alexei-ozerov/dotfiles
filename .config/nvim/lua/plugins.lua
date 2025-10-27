@@ -99,6 +99,7 @@ return {
                     "rust_analyzer",
                     "ts_ls",
                     "ols",
+                    "clangd",
                 })
             end,
     },
@@ -177,5 +178,12 @@ return {
             -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
             "MunifTanjim/nui.nvim",
         }
-    }
+    },
+    -- C/C++ clang-format
+    {
+        "nvimdev/guard.nvim",
+        dependencies = {
+            "nvimdev/guard-collection"
+        }
+    },
 }
