@@ -39,6 +39,16 @@ keymap("n", "<leader>cg", function() vim.cmd("CMakeGenerate") end,
 keymap("n", "<leader>cb", function() vim.cmd("CMakeBuild") end,
     { desc = 'CMake Build' })
 
+-- DAP 
+keymap("n", "<leader>db", function() vim.cmd("DapToggleBreakpoint") end,
+    { desc = 'Set Breakpoint' })
+keymap("n", "<leader>dn", function() vim.cmd("DapNew") end,
+    { desc = 'New Debug Session' })
+keymap("n", "<leader>dso", function() vim.cmd("DapStepOver") end,
+    { desc = 'New Debug Session' })
+keymap("n", "<leader>dsi", function() vim.cmd("DapStepInto") end,
+    { desc = 'New Debug Session' })
+
 -- ╔══════════════════════╗
 -- ║    Buffer Keymaps    ║
 -- ╚══════════════════════╝
