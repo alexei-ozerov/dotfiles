@@ -33,6 +33,12 @@ keymap("n", "<leader>ff", function() require('mini.pick').builtin.files() end,
 keymap("n", "<leader>fg", function() require('mini.pick').builtin.grep_live() end,
     { desc = 'Find String' })
 
+-- CMake Tools 
+keymap("n", "<leader>cg", function() vim.cmd("CMakeGenerate") end,
+    { desc = 'CMake Generate' })
+keymap("n", "<leader>cb", function() vim.cmd("CMakeBuild") end,
+    { desc = 'CMake Build' })
+
 -- ╔══════════════════════╗
 -- ║    Buffer Keymaps    ║
 -- ╚══════════════════════╝

@@ -25,7 +25,7 @@ vim.g.guard_config = {
 
 local ft = require('guard.filetype')
 ft("c,cpp,json"):fmt("clang-format")
-
+require("config.cmake-tools")
 
 --     MINI.NVIM
 require("config.mini.starter")                  -- Load Mini.Starter

@@ -186,4 +186,13 @@ return {
             "nvimdev/guard-collection"
         }
     },
+    {
+        'Civitasv/cmake-tools.nvim',
+        dependencies = {
+            'stevearc/overseer.nvim'
+        }
+    },
+    {
+        'akinsho/toggleterm.nvim', version = "*", config = true
+    }
 }
