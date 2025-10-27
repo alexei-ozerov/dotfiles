@@ -1,5 +1,5 @@
 return {
-    -- Theme
+    -- Themes
     { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
     { "theacodes/witchhazel" },
     {
@@ -8,6 +8,7 @@ return {
         vim.cmd.colorscheme("pywal16")
       end,
   },
+  -- Utility
   {
       "swaits/zellij-nav.nvim",
       lazy = true,
@@ -30,27 +31,6 @@ return {
                     package_uninstalled = '✗',
                 },
             },
-        },
-    },
-    -- Treesitter
-    {
-        "nvim-treesitter/nvim-treesitter",
-        build = ":TSUpdate"
-    },
-    -- Neotree
-    {
-        "nvim-neo-tree/neo-tree.nvim",
-        branch = "v3.x",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-tree/nvim-web-devicons",
-            "MunifTanjim/nui.nvim",
-        },
-        lazy = false,
-        ---@module "neo-tree"
-        ---@type neotree.Config?
-        opts = {
-            -- fill any relevant options here
         },
     },
     {
@@ -78,6 +58,27 @@ return {
                 }
             }
         }
+    },
+    -- Treesitter
+    {
+        "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate"
+    },
+    -- Neotree
+    {
+        "nvim-neo-tree/neo-tree.nvim",
+        branch = "v3.x",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-tree/nvim-web-devicons",
+            "MunifTanjim/nui.nvim",
+        },
+        lazy = false,
+        ---@module "neo-tree"
+        ---@type neotree.Config?
+        opts = {
+            -- fill any relevant options here
+        },
     },
     -- Mini Nvim
     {
@@ -142,7 +143,16 @@ return {
             -- Default list of enabled providers defined so that you can extend it
             -- elsewhere in your config, without redefining it, due to `opts_extend`
             sources = {
-                default = { 'lsp', 'path', 'snippets', 'buffer' },
+                default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+            },
+
+            -- LazyDev
+            providers = {
+              lazydev = {
+                name = "LazyDev",
+                module = "lazydev.integrations.blink",
+                score_offset = 100,
+              },
             },
 
             -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
@@ -194,5 +204,31 @@ return {
     },
     {
         'akinsho/toggleterm.nvim', version = "*", config = true
-    }
+    },
+    {
+        'mfussenegger/nvim-dap'
+    },
+    { "rcarriga/nvim-dap-ui", dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"} },
+    -- Uhhhhhh, trying some LSP stuff
+      {
+    "folke/lazydev.nvim",
+    ft = "lua", -- only load on lua files
+    opts = {
+      library = {
+        -- See the configuration section for more details
+        -- Load luvit types when the `vim.uv` word is found
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+      },
+    },
+  },
+  { -- optional cmp completion source for require statements and module annotations
+    "hrsh7th/nvim-cmp",
+    opts = function(_, opts)
+      opts.sources = opts.sources or {}
+      table.insert(opts.sources, {
+        name = "lazydev",
+        group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+      })
+    end,
+  },
 }

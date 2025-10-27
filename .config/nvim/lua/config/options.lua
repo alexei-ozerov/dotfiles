@@ -23,3 +23,5 @@ vim.o.tags = vim.o.tags .. ",/home/aozerov/.config/nvim/tags"
 -- don't save blank buffers to sessions (like neo-tree, trouble etc.)
 vim.opt.sessionoptions:remove('blank')
 
+vim.opt.termguicolors = true                    -- Set Color Opt
+vim.opt.guifont = "Iosevka Nerd Font Mono"

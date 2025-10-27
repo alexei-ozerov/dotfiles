@@ -5,27 +5,15 @@ require("config.lazy")                          -- Load LazyNvim & Plugins
 require("plugins")                              -- Load plugins
 require("config.keybinds")                      -- Set Keybindings
 
-vim.opt.termguicolors = true                    -- Set Color Opt
-vim.opt.guifont = "Iosevka Nerd Font Mono"
-vim.cmd("colorscheme pywal16")
-vim.uv.os_setenv("JAVA_HOME",  "/home/aozerov/builds/jdk-25")
+-- Set Colorscheme
 -- vim.cmd("colorscheme pywal16")
 vim.cmd("colorscheme catppuccin-mocha")
 
--- TODO (ozerova): Move this to another file at some point.
--- Configure Guard Auto-Format/Auto-Lint
-vim.g.guard_config = {
-    fmt_on_save = true,
-    lsp_as_default_formatter = false,
-    save_on_fmt = true,
-    auto_lint = true,
-    lint_interval = 500,
-    refresh_diagnostic = true
-}
-
-local ft = require('guard.filetype')
-ft("c,cpp,json"):fmt("clang-format")
+-- C/C++ CMake Configuration
 require("config.cmake-tools")
+
+-- DAP Configuration
+require("config.dap")
 
 --     MINI.NVIM
 require("config.mini.starter")                  -- Load Mini.Starter

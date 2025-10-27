@@ -1,3 +1,16 @@
+-- Configure Guard Auto-Format/Auto-Lint
+vim.g.guard_config = {
+    fmt_on_save = true,
+    lsp_as_default_formatter = false,
+    save_on_fmt = true,
+    auto_lint = true,
+    lint_interval = 500,
+    refresh_diagnostic = true
+}
+
+local ft = require('guard.filetype')
+ft("c,cpp,json"):fmt("clang-format")
+
 local osys = require("cmake-tools.osys")
 require("cmake-tools").setup {
   cmake_command = "cmake", -- this is used to specify cmake command path
