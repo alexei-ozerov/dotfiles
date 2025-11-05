@@ -12,6 +12,7 @@
 .config/qutebrowser|active|overwrite|${HOME}
 .wsl2|inactive|overwrite|${HOME}
 .alias|active|overwrite|${HOME}
+.procedures|active|overwrite|${HOME}
 .bashrc|inactive|backup|${HOME}
 .zshrc|inactive|backup|${HOME}
 .zprofile|active|overwrite|${HOME}

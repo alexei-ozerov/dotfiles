@@ -20,6 +20,7 @@ export EDITOR=nvim
 # Paths
 PATH=$PATH:~/.local/bin 
 PATH=$PATH:~/builds/ols
+PATH=$PATH:~/builds/umka-lang/umka_linux
 PATH=$PATH:~/.cargo/bin
 
 #
@@ -27,6 +28,7 @@ PATH=$PATH:~/.cargo/bin
 #
 
 source ~/.alias
+source ~/.procedures
 
 #
 # Configure Tooling
