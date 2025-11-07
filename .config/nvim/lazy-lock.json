@@ -5,7 +5,7 @@
   "friendly-snippets": { "branch": "main", "commit": "572f5660cf05f8cd8834e096d7b4c921ba18e175" },
   "guard-collection": { "branch": "main", "commit": "6bd5ad7941fc4c182f29c29a743eabc31fdac2e8" },
   "guard.nvim": { "branch": "main", "commit": "5fd971c4a4d6112f14dc4024a6abf1db82b63c7b" },
-  "lazy.nvim": { "branch": "main", "commit": "1ea3c4085785f460fb0e46d2fe1ee895f5f9e7c1" },
+  "lazy.nvim": { "branch": "main", "commit": "85c7ff3711b730b4030d03144f6db6375044ae82" },
   "mason.nvim": { "branch": "main", "commit": "ad7146aa61dcaeb54fa900144d768f040090bff0" },
   "mini.nvim": { "branch": "main", "commit": "94cae4660a8b2d95dbbd56e1fbc6fcfa2716d152" },
   "neo-tree.nvim": { "branch": "v3.x", "commit": "0c29e3795b9105d68390d2fdfd430409ef8c5d65" },

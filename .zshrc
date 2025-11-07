@@ -19,9 +19,9 @@ export EDITOR=nvim
 
 # Paths
 PATH=$PATH:~/.local/bin 
+PATH=$PATH:~/.cargo/bin
 PATH=$PATH:~/builds/ols
 PATH=$PATH:~/builds/umka-lang/umka_linux
-PATH=$PATH:~/.cargo/bin
 
 #
 # Loads
@@ -38,4 +38,4 @@ eval "$(starship init zsh)"
 eval "$(atuin init zsh --disable-up-arrow)"
 eval "$(zoxide init zsh)"
 eval "$(direnv hook zsh)"
-eval "$(keychain --eval ./.ssh/github.alexei-ozerov --eval ./.ssh/gitlab.ozerova)"
+eval "$(keychain --eval ./.ssh/ozerova_arch_github --eval ./.ssh/ozerova_arch_univeris_gitlab)"

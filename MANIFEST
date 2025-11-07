@@ -10,10 +10,11 @@
 .config/hyfetch.json|active|overwrite|${HOME}
 .config/starship.toml|active|overwrite|${HOME}
 .config/qutebrowser|active|overwrite|${HOME}
+.config/waybar|active|overwrite|${HOME}
 .wsl2|inactive|overwrite|${HOME}
 .alias|active|overwrite|${HOME}
 .procedures|active|overwrite|${HOME}
 .bashrc|inactive|backup|${HOME}
-.zshrc|inactive|backup|${HOME}
+.zshrc|active|backup|${HOME}
 .zprofile|active|overwrite|${HOME}
 # END MANIFEST

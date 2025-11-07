@@ -2,12 +2,6 @@ return {
     -- Themes
     { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
     { "theacodes/witchhazel" },
-    {
-      'uZer/pywal16.nvim',
-      config = function()
-        vim.cmd.colorscheme("pywal16")
-      end,
-  },
   -- Utility
   {
       "swaits/zellij-nav.nvim",
