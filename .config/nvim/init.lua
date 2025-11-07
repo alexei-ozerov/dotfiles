@@ -1,5 +1,4 @@
---     Alexei's Nvim Configuration (2025)
---     INIT
+-- Alexei's Nvim Configuration
 require("config.options")                       -- Set default options
 require("config.lazy")                          -- Load LazyNvim & Plugins
 require("plugins")                              -- Load plugins
@@ -18,7 +17,7 @@ require("config.dap")
 --     MINI.NVIM
 require("config.mini.starter")                  -- Load Mini.Starter
 
--- Default Configuration
+-- MINI Nvim Configuration
 require("mini.align").setup()
 require("mini.bracketed").setup()
 require("mini.bufremove").setup()
@@ -38,7 +37,7 @@ require("mini.git").setup()
 require("mini.diff").setup()
 -- require("mini.indentscope").setup()
 
--- Additional Configuration
+-- Additional MINI Configuration
 -- Look under ./lua/config/mini/.
 require("config.mini.basics")                   -- Load Mini.Basics (defaults)
 require("config.mini.animate")                  -- Load Mini.Animate (basic animations)
@@ -48,5 +47,5 @@ require("config.mini.move")                     -- Load Mini.Move (buffer manipu
 require("config.mini.clue")                     -- Load Mini.Clue (hints)
 require("config.mini.pairs")                    -- Load Mini.Pairs (auto pairs)
 
---     TREESITTER
+-- Treesitter
 require("config.treesitter")

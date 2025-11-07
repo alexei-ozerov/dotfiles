@@ -20,8 +20,10 @@ export EDITOR=nvim
 # Paths
 PATH=$PATH:~/.local/bin 
 PATH=$PATH:~/.cargo/bin
+
 PATH=$PATH:~/builds/ols
 PATH=$PATH:~/builds/umka-lang/umka_linux
+PATH=$PATH:~/builds/docker-aseprite-linux/output/aseprite/build/bin
 
 #
 # Loads
