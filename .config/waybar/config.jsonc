@@ -6,7 +6,6 @@
     "modules-left": [
         "hyprland/workspaces",
         "tray",
-        "hyprland/mode",
         "mpris"
     ],
     "modules-center": [
@@ -14,6 +13,7 @@
     ],
     "modules-right": [
     "idle_inhibitor",
+    "battery",
     "custom/kernel",
     "disk#ssd",
     "temperature",
@@ -92,7 +92,7 @@
     },
     "clock": {
         "interval": 60,
-        "timezone": "Europe/Budapest",
+        "timezone": "America/Toronto",
         "format": "{:%F %R }",
         "tooltip-format": "<tt><small>{calendar}</small></tt>",
         "calendar": {
@@ -187,4 +187,16 @@
         },
         "on-click": "foot --app-id pulsemixer pulsemixer"
     },
+    "battery": {
+       "states": {
+       		"warning": 30,
+       		"critical": 15
+       },
+       "format": "{icon} {capacity}%",
+       "format-charging": " {capacity}%",
+       "format-plugged": "{capacity}%",
+       "format-alt": "{time} {icon}",
+       "format-full": " {capacity}%",
+       "format-icons": ["", "", ""]
+	}
 }
