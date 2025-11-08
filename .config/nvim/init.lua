@@ -1,11 +1,10 @@
 -- Alexei's Nvim Configuration
-require("config.options")                       -- Set default options
-require("config.lazy")                          -- Load LazyNvim & Plugins
-require("plugins")                              -- Load plugins
-require("config.keybinds")                      -- Set Keybindings
+require("config.options") -- Set default options
+require("config.lazy") -- Load LazyNvim & Plugins
+require("plugins") -- Load plugins
+require("config.keybinds") -- Set Keybindings
 
 -- Set Colorscheme
--- vim.cmd("colorscheme pywal16")
 vim.cmd("colorscheme catppuccin-mocha")
 
 -- C/C++ CMake Configuration
@@ -15,7 +14,7 @@ require("config.cmake-tools")
 require("config.dap")
 
 --     MINI.NVIM
-require("config.mini.starter")                  -- Load Mini.Starter
+require("config.mini.starter") -- Load Mini.Starter
 
 -- MINI Nvim Configuration
 require("mini.align").setup()
@@ -39,13 +38,13 @@ require("mini.diff").setup()
 
 -- Additional MINI Configuration
 -- Look under ./lua/config/mini/.
-require("config.mini.basics")                   -- Load Mini.Basics (defaults)
-require("config.mini.animate")                  -- Load Mini.Animate (basic animations)
+require("config.mini.basics") -- Load Mini.Basics (defaults)
+require("config.mini.animate") -- Load Mini.Animate (basic animations)
 -- require("config.mini.completion")            -- Load Mini.Completion (completion library)
-require("config.mini.diff")                     -- Load Mini.Diff (diff gutter status)
-require("config.mini.move")                     -- Load Mini.Move (buffer manipulation)
-require("config.mini.clue")                     -- Load Mini.Clue (hints)
-require("config.mini.pairs")                    -- Load Mini.Pairs (auto pairs)
+require("config.mini.diff") -- Load Mini.Diff (diff gutter status)
+require("config.mini.move") -- Load Mini.Move (buffer manipulation)
+require("config.mini.clue") -- Load Mini.Clue (hints)
+require("config.mini.pairs") -- Load Mini.Pairs (auto pairs)
 
 -- Treesitter
 require("config.treesitter")
