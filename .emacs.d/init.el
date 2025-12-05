@@ -10,7 +10,7 @@
 
 ;; Add Exec Path
 (add-to-list 'exec-path "~/.cargo/bin")
-(add-to-list 'exec-path "~/builds/ols")
+(add-to-list 'exec-path "/usr/bin/")
 (add-to-list 'exec-path "~/go/bin")
 
 ;; Load Emacs Local Modes
@@ -77,13 +77,13 @@
   (evil-mode))
 
 ;; Drag Stuff Mode
-; (use-package drag-stuff
-;   :init
-;   :ensure t)
-;
-; (drag-stuff-mode t)
-; (define-key evil-visual-state-map (kbd "K") 'drag-stuff-up)
-; (define-key evil-visual-state-map (kbd "J") 'drag-stuff-down)
+(use-package drag-stuff
+  :init
+  :ensure t)
+
+(drag-stuff-mode t)
+(define-key evil-visual-state-map (kbd "K") 'drag-stuff-up)
+(define-key evil-visual-state-map (kbd "J") 'drag-stuff-down)
 
 (use-package evil-collection
   :ensure t
@@ -127,6 +127,13 @@
   :ensure t
   :init
   (marginalia-mode))
+
+(use-package orderless
+  :ensure t
+  :config
+  (setq completion-styles '(orderless basic))
+  (setq completion-category-defaults nil)
+  (setq completion-category-overrides nil))
 
 (use-package savehist
   :init
