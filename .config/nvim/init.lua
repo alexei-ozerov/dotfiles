@@ -4,9 +4,6 @@ require("config.lazy") -- Load LazyNvim & Plugins
 require("plugins") -- Load plugins
 require("config.keybinds") -- Set Keybindings
 
--- Set Colorscheme
-vim.cmd("colorscheme catppuccin-mocha")
-
 -- C/C++ CMake Configuration
 require("config.cmake-tools")
 

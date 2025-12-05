@@ -1,6 +1,15 @@
 return {
+    -- Statusbar
+    {'vimpostor/vim-tpipeline'},
     -- Themes
     {"catppuccin/nvim", name = "catppuccin", priority = 1000},
+    {
+        "rose-pine/neovim",
+        name = "rose-pine",
+        config = function()
+            vim.cmd("colorscheme rose-pine")
+        end
+    },
     {"theacodes/witchhazel"}, -- Utility
     {
         "swaits/zellij-nav.nvim",

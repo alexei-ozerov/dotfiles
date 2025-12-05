@@ -26,6 +26,14 @@ alias cd="z"
 alias v="nvim"
 alias m="rmpc"
 alias sc="hyprshot -m output --clipboard-only"
+alias sr="hyprshot -m region --clipboard-only"
+
+# Arch Linux
+alias add="sudo pacman -Sy"
+alias search="sudo pacman -Ss"
+alias upgrade="sudo pacman -Syu"
+alias query="sudo pacman -Q"
+alias clean="nix-collect-garbage -d && sudo paccache -r"
 
 #
 # Git
@@ -63,3 +71,13 @@ alias kc="kubectx"
 alias kns="kubens"
 alias kl="kubectl logs -f"
 alias ke="kubectl exec -it"
+
+# Python 
+alias py="source ~/.pyenv/default/bin/activate"
+
+#
+# Univeris
+#
+
+alias flexg4test="gcloud container clusters get-credentials flexg4test-default-cluster --region northamerica-northeast1 --project flexg4test-f5e2"
+alias devshared="gcloud container clusters get-credentials devshared-default-cluster --region northamerica-northeast1 --project devshared-9195"

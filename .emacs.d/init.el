@@ -1,4 +1,12 @@
-;; Alexei Ozerov Emacs Configuration
+;;;
+;;; ozerova's emacs configuration
+;;;
+;;; compiled from a variety of 3rd party sources while I learn emacs
+;;;
+;;; 3rd party sources:
+;;;   * https://github.com/LionyxML/emacs-solo
+;;;   * https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
+;;;
 
 ;; Add Exec Path
 (add-to-list 'exec-path "~/.cargo/bin")
@@ -12,13 +20,8 @@
 (add-to-list 'load-path "~/.emacs.local/ef-themes")
 
 ;; General Configuration
-(menu-bar-mode 0)
-(scroll-bar-mode 0)
-(tool-bar-mode 0)
 (global-display-line-numbers-mode)
-
 (setq display-line-numbers 'relative)
-
 (global-auto-revert-mode t)
 
 (require 'uniquify)
@@ -40,22 +43,20 @@
 ;; Set Font & Size
 (set-frame-font "Iosevka NF 18" nil t)
 
-;; Optimizations
-(setq gc-cons-threshold 100000000) ; 100 mb
-(setq read-process-output-max (* 1024 1024)) ; 1mb
-
 ;; MELPA Packages
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives
+             '("gnu"   . "http://elpa.gnu.org/packages/"))
+
 (package-initialize)
 (unless package-archive-contents
   (package-refresh-contents))
 
-;; Install Packages
+; Install Packages
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
-
 
 ;; Org Mode
 (use-package org-bullets :ensure t)
@@ -63,10 +64,6 @@
 (setq org-hide-leading-stars t)
 (setq org-src-fontify-natively t)
 (global-prettify-symbols-mode t)
-
-;; Vterm
-(use-package vterm
-    :ensure t)
 
 ;; Sly
 (use-package sly
@@ -80,13 +77,13 @@
   (evil-mode))
 
 ;; Drag Stuff Mode
-(use-package drag-stuff
-  :init
-  :ensure t)
-
-(drag-stuff-mode t)
-(define-key evil-visual-state-map (kbd "K") 'drag-stuff-up)
-(define-key evil-visual-state-map (kbd "J") 'drag-stuff-down)
+; (use-package drag-stuff
+;   :init
+;   :ensure t)
+;
+; (drag-stuff-mode t)
+; (define-key evil-visual-state-map (kbd "K") 'drag-stuff-up)
+; (define-key evil-visual-state-map (kbd "J") 'drag-stuff-down)
 
 (use-package evil-collection
   :ensure t
@@ -140,43 +137,61 @@
   :init
   :ensure t)
 
+(use-package nerd-icons-completion
+  :ensure t
+  :after marginalia
+  :config
+  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
+
+(use-package nerd-icons-corfu
+  :ensure t
+  :after corfu
+  :config
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+
+(use-package nerd-icons-dired
+  :ensure t
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
+
 ;; Autocomplete
 (use-package company
   :ensure t
   :hook (after-init . global-company-mode))
 
+(use-package corfu
+  :ensure t
+  :hook (after-init . global-corfu-mode)
+  :bind (:map corfu-map ("<tab>" . corfu-complete))
+  :config
+  (setq tab-always-indent 'complete)
+  (setq corfu-preview-current nil)
+  (setq corfu-min-width 20)
+
+  (setq corfu-popupinfo-delay '(1.25 . 0.5))
+  (corfu-popupinfo-mode 1) ; shows documentation after `corfu-popupinfo-delay'
+
+  ;; Sort by input history (no need to modify `corfu-sort-function').
+  (with-eval-after-load 'savehist
+    (corfu-history-mode 1)
+    (add-to-list 'savehist-additional-variables 'corfu-history)))
+
 ;; Language Modes
 (use-package go-mode
   :ensure t)
-
-(use-package terraform-mode
-  :ensure t
-  :custom (terraform-indent-level 2)
-  :config
-  (defun my-terraform-mode-init ()
-    ;; if you want to use outline-minor-mode
-    ;; (outline-minor-mode 1)
-    )
-  (add-hook 'terraform-mode-hook 'my-terraform-mode-init))
 
 (use-package eglot
   :init
   :ensure t)
 
 (use-package eglot-booster
-    :ensure t
+	:straight ( eglot-booster :type git :host nil :repo "https://github.com/jdtsmith/eglot-booster")
 	:after eglot
-	:config	(eglot-booster-mode))
+	:config (eglot-booster-mode))
 
 ;; Local Emacs Packages 
 (require 'ef-themes)
-
-;; If you like two specific themes and want to switch between them, you
-;; can specify them in `ef-themes-to-toggle' and then invoke the command
-;; `ef-themes-toggle'.  All the themes are included in the variable
-;; `ef-themes-collection'.
 (setq ef-themes-to-toggle '(ef-summer ef-winter))
-
 (setq ef-themes-headings ; read the manual's entry or the doc string
       '((0 variable-pitch light 1.9)
         (1 variable-pitch light 1.8)
@@ -187,18 +202,9 @@
         (6 variable-pitch 1.3)
         (7 variable-pitch 1.2)
         (t variable-pitch 1.1)))
-
-;; They are nil by default...
 (setq ef-themes-mixed-fonts t
       ef-themes-variable-pitch-ui t)
-
-;; Disable all other themes to avoid awkward blending:
 (mapc #'disable-theme custom-enabled-themes)
-
-;; Load the theme of choice:
-(load-theme 'ef-summer :no-confirm)
-
-;; OR use this to load the theme which also calls `ef-themes-post-load-hook':
 (ef-themes-select 'ef-summer)
 
 ;; Configure Split Movement Via Windmove
@@ -231,25 +237,13 @@
 (require 'company-go)
 (require 'go-mode)
 
+(use-package rustic
+  :ensure t
+  :config
+  (setq rustic-format-on-save nil)
+  :custom
+  (rustic-cargo-use-last-stored-arguments t))
+
 ;; Eglot Odin Config
 (with-eval-after-load 'eglot
   (add-to-list 'eglot-server-programs '((odin-mode odin-ts-mode) . ("ols"))))
-
-;; Treesitter Grammer List
-;; TODO: Review this list and convert to tagged releases
-(setq treesit-language-source-alist
-   '((bash "https://github.com/tree-sitter/tree-sitter-bash")
-     (cmake "https://github.com/uyha/tree-sitter-cmake")
-     (css "https://github.com/tree-sitter/tree-sitter-css")
-     (elisp "https://github.com/Wilfred/tree-sitter-elisp")
-     (go "https://github.com/tree-sitter/tree-sitter-go")
-     (html "https://github.com/tree-sitter/tree-sitter-html")
-     (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-     (json "https://github.com/tree-sitter/tree-sitter-json")
-     (make "https://github.com/alemuller/tree-sitter-make")
-     (markdown "https://github.com/ikatyang/tree-sitter-markdown")
-     (python "https://github.com/tree-sitter/tree-sitter-python")
-     (toml "https://github.com/tree-sitter/tree-sitter-toml")
-     (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-     (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-     (yaml "https://github.com/ikatyang/tree-sitter-yaml")))

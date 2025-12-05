@@ -1,9 +1,7 @@
 theme = catppuccin-mocha
 shell-integration = zsh
 window-padding-balance = true
-window-padding-y = 20
-window-padding-x = 20
 background-opacity = 1.0 
 font-family = "Iosevka Nerd Font Mono" 
-font-size = 14
+font-size = 17
 window-decoration = false
