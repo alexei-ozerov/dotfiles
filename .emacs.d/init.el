@@ -1,256 +1,342 @@
-;;;
-;;; ozerova's emacs configuration
-;;;
-;;; compiled from a variety of 3rd party sources while I learn emacs
-;;;
-;;; 3rd party sources:
-;;;   * https://github.com/LionyxML/emacs-solo
-;;;   * https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/
-;;;
+;; Bootstrap straight.el
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name
+        "straight/repos/straight.el/bootstrap.el"
+        (or (bound-and-true-p straight-base-dir)
+            user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+(setq straight-use-package-by-default t)
+(setq package-enable-at-startup nil)
 
-;; Add Exec Path
-(add-to-list 'exec-path "~/.cargo/bin")
-(add-to-list 'exec-path "/usr/bin/")
-(add-to-list 'exec-path "~/go/bin")
-
-;; Load Emacs Local Modes
-(add-to-list 'load-path "~/.emacs.local/")
-
-;; ef-themes: https://protesilaos.com/emacs/ef-themes-pictures
-(add-to-list 'load-path "~/.emacs.local/ef-themes")
-
-;; General Configuration
-(global-display-line-numbers-mode)
-(setq display-line-numbers 'relative)
-(global-auto-revert-mode t)
-
-(require 'uniquify)
-(setq uniquify-buffer-name-style 'forward)
-(setq backup-directory-alist `(("." . "~/.saves")))
-(setq auto-save-file-name-transforms `((".*" "~/.saves/" t)))
-(setq custom-file (locate-user-emacs-file "custom.el"))
-(when (file-exists-p custom-file)
-  (load custom-file))
-
-;; Disable Splash Screen
-(setq inhibit-startup-message t) 
-(setq initial-scratch-message nil)
-
-;; Configure Spaces
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
-
-;; Set Font & Size
-(set-frame-font "Iosevka NF 18" nil t)
-
-;; MELPA Packages
+;; Setup MELPA/GNU packages
 (require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives
-             '("gnu"   . "http://elpa.gnu.org/packages/"))
-
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")))
 (package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
 
-; Install Packages
 (unless (package-installed-p 'use-package)
+  (unless (package-archive-contents)
+    (package-refresh-contents))
   (package-install 'use-package))
 
-;; Org Mode
-(use-package org-bullets :ensure t)
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-(setq org-hide-leading-stars t)
-(setq org-src-fontify-natively t)
-(global-prettify-symbols-mode t)
+(eval-when-compile (require 'use-package))
 
-;; Sly
-(use-package sly
-    :ensure t)
+;; Defaults
+(use-package emacs 
+  :ensure nil
+  :custom 
 
-;; eVIl Mode
-(use-package evil 
+  ;; UI
+  (inhibit-startup-message t)
+  (initial-scratch-message "")
+  (use-dialog-box nil)
+  (use-short-answers t)
+  (display-line-numbers-type 'relative)
+
+  ;; Scrolling
+  (scroll-margin 8)
+  (scroll-conservatively 101)
+  (scroll-preserve-screen-position t)
+
+  ;; File Management
+  (make-backup-files t)
+  (backup-directory-alist `(("." . "~/.saves")))
+  (auto-save-file-name-transforms `((".*" "~/.saves/" t)))
+  (lock-file-name-transforms `((".*" "~/.saves/" t)))
+  
+  ;; Indentation
+  (indent-tabs-mode nil)
+  (tab-width 4)
+  
+  ;; Cache paths
+  (url-configuration-directory (expand-file-name "cache/url/" user-emacs-directory))
+  (recentf-save-file (expand-file-name "cache/recentf" user-emacs-directory))
+  (bookmark-file (expand-file-name "cache/bookmarks" user-emacs-directory))
+  (multisession-directory (expand-file-name "cache/multisession/" user-emacs-directory))
+  (project-list-file (expand-file-name "cache/projects" user-emacs-directory))
+  (savehist-file (expand-file-name "cache/history" user-emacs-directory))
+  (save-place-file (expand-file-name "cache/saveplace" user-emacs-directory))
+  (transient-history-file (expand-file-name "cache/transient/history.el" user-emacs-directory))
+  (transient-levels-file (expand-file-name "cache/transient/levels.el" user-emacs-directory))
+  (transient-values-file (expand-file-name "cache/transient/values.el" user-emacs-directory))
+
+  ;; Custom file (keep init.el clean)
+  (custom-file (expand-file-name "custom.el" user-emacs-directory))
+
+  :config
+
+  (set-frame-font "Iosevka NF 18" nil t)
+
+  (global-display-line-numbers-mode 1)
+  (global-auto-revert-mode 1)
+  (pixel-scroll-precision-mode 1)
+  (electric-pair-mode 1)
+  
+  (use-package exec-path-from-shell
+    :ensure t
+    :config (exec-path-from-shell-initialize))
+
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (with-current-buffer (get-buffer-create "*scratch*")
+                (let ((logo "
+    ;;      ___           ___                   ___           ___           ___           ___           ___      
+    ;;     /\\  \\         /\\  \\                 /\\__\\         /\\  \\         /\\  \\         /\\__\\         /\\__\\     
+    ;;    /::\\  \\       /::\\  \\               /:/ _/_       |::\\  \\       /::\\  \\       /:/  /        /:/ _/_    
+    ;;   /:/\\:\\  \\     /:/\\:\\  \\             /:/ /\\__\\      |:|:\\  \\     /:/\\:\\  \\     /:/  /        /:/ /\\  \\   
+    ;;  /:/  \\:\\  \\   /:/ /::\\  \\           /:/ /:/ _/_    __|:|\\:\\  \\   /:/ /::\\  \\   /:/  /  ___   /:/ /::\\ \\  
+    ;; /:/__/ \\:\\__\\ /:/_/:/\\:\\__\\         /:/_/:/ /\\__\\ /::::|_\\:\\__\\ /:/_/:/\\:\\__\\ /:/__/  /\\__\\ /:/_/:/\\:\\__\\ 
+    ;; \\:\\  \\ /:/  / \\:\\/:/  \\/__/         \\:\\/:/ /:/  / \\:\\~~\\  \\/__/ \\:\\/:/  \\/__/ \\:\\  \\ /:/  / \\:\\/:/ /:/  / 
+    ;;  \\:\\  /:/  /   \\::/__/               \\::/_/:/  /   \\:\\  \\        \\::/__/       \\:\\  /:/  /   \\::/ /:/  /  
+    ;;   \\:\\/:/  /     \\:\\  \\                \\:\\/:/  /     \\:\\  \\        \\:\\  \\        \\:\\/:/  /     \\/_/:/  /   
+    ;;    \\::/  /       \\:\\__\\                \\::/  /       \\:\\__\\        \\:\\__\\        \\::/  /        /:/  /    
+    ;;     \\/__/         \\/__/                 \\/__/         \\/__/         \\/__/         \\/__/         \\/__/     
+    ;;
+    ;;   Loading time : %s
+    ;;   Packages     : %s
+  "))
+                  (insert 
+                   (propertize (format logo 
+                                       (emacs-init-time)
+                                       (number-to-string (length package-activated-list)))
+                               'face 'fixed-pitch
+                               'font-lock-face 'default)))
+                (set-buffer-modified-p nil))))
+
+  ;; End emacs
+  )
+
+;; Load Custom file
+(load custom-file 'noerror)
+
+;; Evil Mode & Keys 
+(use-package evil
+  :ensure t
   :init
-  :ensure t 
-  :init
-  (evil-mode))
-
-;; Drag Stuff Mode
-(use-package drag-stuff
-  :init
-  :ensure t)
-
-(drag-stuff-mode t)
-(define-key evil-visual-state-map (kbd "K") 'drag-stuff-up)
-(define-key evil-visual-state-map (kbd "J") 'drag-stuff-down)
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+  (setq evil-undo-system 'undo-redo)
+  :config
+  (evil-mode 1))
 
 (use-package evil-collection
   :ensure t
-  :after evil)
+  :after evil
+  :config
+  (evil-collection-init))
 
 (use-package evil-surround
   :ensure t
+  :config (global-evil-surround-mode 1))
+
+(use-package evil-cleverparens
+  :ensure t
+  :hook ((lisp-mode . evil-cleverparens-mode)
+         (emacs-lisp-mode . evil-cleverparens-mode)
+         (sly-mrepl-mode . evil-cleverparens-mode)))
+
+(global-set-key (kbd "C-h") 'windmove-left)
+(global-set-key (kbd "C-l") 'windmove-right)
+(global-set-key (kbd "C-k") 'windmove-up)
+(global-set-key (kbd "C-j") 'windmove-down)
+
+;; Completion
+(use-package vertico
+  :ensure t
+  :init (vertico-mode))
+
+(use-package savehist
+  :ensure nil
+  :init (savehist-mode))
+
+(use-package marginalia
+  :ensure t
+  :init (marginalia-mode))
+
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles partial-completion)))))
+
+(use-package corfu
+  :ensure t
+  :init
+  (global-corfu-mode)
+  :custom
+  (corfu-auto t)
+  (corfu-auto-prefix 2)
+  (corfu-cycle t)
+  :bind (:map corfu-map ("<tab>" . corfu-complete)))
+
+;; Icons
+(use-package nerd-icons :ensure t)
+(use-package nerd-icons-completion
+  :ensure t
+  :after marginalia
+  :config (nerd-icons-completion-mode))
+(use-package nerd-icons-corfu
+  :ensure t
+  :after corfu
+  :config (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+(use-package nerd-icons-dired
+  :ensure t
+  :hook (dired-mode . nerd-icons-dired-mode))
+
+;; Themes
+(add-to-list 'load-path "~/.emacs.local/")
+; (add-to-list 'load-path "~/.emacs.local/ef-themes")
+;
+; (use-package ef-themes
+;   :ensure t
+;   :config
+;   (setq ef-themes-mixed-fonts t
+;         ef-themes-variable-pitch-ui t)
+;
+;   (defun ef-themes-overrides ()
+;     (custom-set-faces
+;      '(font-lock-function-name-face ((t :weight bold :height 1.1 :inherit ef-themes-function)))
+;      '(font-lock-type-face ((t :slant italic :inherit ef-themes-type)))
+;      '(font-lock-constant-face ((t :weight bold :inherit ef-themes-constant)))
+;      '(font-lock-variable-name-face ((t :inherit ef-themes-variable)))
+;      '(font-lock-property-name-face ((t :slant italic :inherit ef-themes-variable)))))
+;
+;   (add-hook 'ef-themes-post-load-hook #'ef-themes-overrides)
+;
+;   (ef-themes-select 'ef-summer))
+
+(use-package catppuccin-theme
+  :ensure t)
+(load-theme 'catppuccin :no-confirm)
+(setq catppuccin-flavor 'mocha) ;; or 'latte, 'macchiato, or 'mocha
+(catppuccin-reload)
+
+;; Status Bar
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1)
+  :custom
+  (doom-modeline-height 30)
+  (doom-modeline-bar-width 4)
+  (doom-modeline-icon nil)
+  (doom-modeline-buffer-file-name-style 'truncate-upto-project)
+  (doom-modeline-buffer-encoding t)
+  (doom-modeline-indent-info nil)
+  
+  (doom-modeline-project-detection 'project)
+  (doom-modeline-enable-word-count nil))
+
+;; Group minor modes
+(use-package minions
+  :ensure t
+  :config (minions-mode 1))
+
+;; Development
+;; Project Management
+(use-package project :ensure nil)
+
+;; Git
+(use-package magit
+  :ensure t
+  :custom
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
+
+;; Format
+(use-package apheleia
+  :ensure t
+  :config (apheleia-global-mode +1))
+
+;; LSP (Eglot)
+(use-package eglot
+  :ensure nil ; Built-in since Emacs 29
+  :hook ((go-mode . eglot-ensure)
+         (c-mode . eglot-ensure)
+         (c++-mode . eglot-ensure)
+         (rustic-mode . eglot-ensure)
+         (odin-mode . eglot-ensure))
   :config
-  (global-evil-surround-mode 1))
+  (add-to-list 'eglot-server-programs '((odin-mode odin-ts-mode) . ("ols"))))
+
+;; Treesitter 
+(use-package treesit-auto
+  :ensure t
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
+
+;; Sly (CL)
+(use-package sly
+  :ensure t
+  :custom
+  (inferior-lisp-program "sbcl")
+  (sly-completing-read-style 'basic)
+  :hook
+  (lisp-mode . sly-mode)
+  (lisp-mode . corfu-mode)
+  :config
+  (require 'sly-autodoc)
+  (add-hook 'lisp-mode-hook 'sly-autodoc-mode)
+  (sly-setup '(sly-fancy)))
+
+(use-package sly-quicklisp
+  :ensure t)
+
+;; Go
+(use-package go-ts-mode
+  :ensure nil
+  :mode "\\.go\\'")
+
+;; Rust
+(use-package rustic
+  :ensure t
+  :custom
+  (rustic-format-on-save nil) ;; handled by apheleia
+  (rustic-lsp-client 'eglot))
+
+;; C/C++
+(use-package c-ts-mode
+  :ensure nil
+  :mode (("\\.c\\'" . c-ts-mode)
+         ("\\.h\\'" . c-ts-mode)
+         ("\\.cpp\\'" . c++-ts-mode)))
+
+;; Odin
+(use-package odin-ts-mode
+  :straight (:host github :repo "Sampie159/odin-ts-mode")
+  :mode ("\\.odin\\'" . odin-ts-mode)
+  :hook (odin-ts-mode . eglot-ensure))
+
+;; Org Mode
+(use-package org
+  :ensure nil
+  :defer t
+  :hook (org-mode . org-indent-mode)
+  :config
+  (org-babel-do-load-languages 'org-babel-load-languages '((shell . t))))
+
+(use-package org-modern
+  :ensure t
+  :hook (org-mode . org-modern-mode)
+  :custom
+  (org-modern-star '("◉" "○" "◈" "◇" "✳" "test")))
 
 (use-package evil-org
   :ensure t
   :after org
+  :hook (org-mode . evil-org-mode)
   :config
-  (add-hook 'org-mode-hook 'evil-org-mode)
-  (add-hook 'evil-org-mode-hook
-        (lambda () (evil-org-set-key-theme)))
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
 
-;; Magit
-(use-package magit
-  :bind
-  ("C-x g" . magit-status)  :config
-  (use-package evil-magit)
-  (use-package with-editor)
-  (setq magit-push-always-verify nil)
-  (setq git-commit-summary-max-length 50)  (with-eval-after-load 'magit-remote
-    (magit-define-popup-action 'magit-push-popup ?P
-      'magit-push-implicitly--desc
-      'magit-push-implicitly ?p t))  (add-hook 'with-editor-mode-hook 'evil-insert-state))
-
-;; Minibuffer Customization
-(use-package vertico
-  :ensure t
-  :init
-  (vertico-mode))
-
-(use-package marginalia
-  :after vertico
-  :ensure t
-  :init
-  (marginalia-mode))
-
-(use-package orderless
-  :ensure t
-  :config
-  (setq completion-styles '(orderless basic))
-  (setq completion-category-defaults nil)
-  (setq completion-category-overrides nil))
-
-(use-package savehist
-  :init
-  (savehist-mode))
-
-;; Fonts
-(use-package nerd-icons
-  :init
-  :ensure t)
-
-(use-package nerd-icons-completion
-  :ensure t
-  :after marginalia
-  :config
-  (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
-
-(use-package nerd-icons-corfu
-  :ensure t
-  :after corfu
-  :config
-  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
-
-(use-package nerd-icons-dired
-  :ensure t
-  :hook
-  (dired-mode . nerd-icons-dired-mode))
-
-;; Autocomplete
-(use-package company
-  :ensure t
-  :hook (after-init . global-company-mode))
-
-(use-package corfu
-  :ensure t
-  :hook (after-init . global-corfu-mode)
-  :bind (:map corfu-map ("<tab>" . corfu-complete))
-  :config
-  (setq tab-always-indent 'complete)
-  (setq corfu-preview-current nil)
-  (setq corfu-min-width 20)
-
-  (setq corfu-popupinfo-delay '(1.25 . 0.5))
-  (corfu-popupinfo-mode 1) ; shows documentation after `corfu-popupinfo-delay'
-
-  ;; Sort by input history (no need to modify `corfu-sort-function').
-  (with-eval-after-load 'savehist
-    (corfu-history-mode 1)
-    (add-to-list 'savehist-additional-variables 'corfu-history)))
-
-;; Language Modes
-(use-package go-mode
-  :ensure t)
-
-(use-package eglot
-  :init
-  :ensure t)
-
-(use-package eglot-booster
-	:straight ( eglot-booster :type git :host nil :repo "https://github.com/jdtsmith/eglot-booster")
-	:after eglot
-	:config (eglot-booster-mode))
-
-;; Local Emacs Packages 
-(require 'ef-themes)
-(setq ef-themes-to-toggle '(ef-summer ef-winter))
-(setq ef-themes-headings ; read the manual's entry or the doc string
-      '((0 variable-pitch light 1.9)
-        (1 variable-pitch light 1.8)
-        (2 variable-pitch regular 1.7)
-        (3 variable-pitch regular 1.6)
-        (4 variable-pitch regular 1.5)
-        (5 variable-pitch 1.4) ; absence of weight means `bold'
-        (6 variable-pitch 1.3)
-        (7 variable-pitch 1.2)
-        (t variable-pitch 1.1)))
-(setq ef-themes-mixed-fonts t
-      ef-themes-variable-pitch-ui t)
-(mapc #'disable-theme custom-enabled-themes)
-(ef-themes-select 'ef-summer)
-
-;; Configure Split Movement Via Windmove
-(when (fboundp 'windmove-default-keybindings)
-  (windmove-default-keybindings))
-
-(global-set-key (kbd "C-h")  'windmove-left)
-(global-set-key (kbd "C-l") 'windmove-right)
-(global-set-key (kbd "C-k")    'windmove-up)
-(global-set-key (kbd "C-j")  'windmove-down)
-
-;; Simple C Mode
-(require 'simpc-mode)
-(add-to-list 'auto-mode-alist '("\\.[hc]\\(pp\\)?\\'" . simpc-mode))
-
-;; AStyle C Formatter
-(defun astyle-buffer ()
-  (interactive
-  (let ((saved-line-number (line-number-at-pos)))
-    (shell-command-on-region
-     (point-min)
-     (point-max)
-     "astyle --style=kr"
-     nil
-     t)
-    (goto-line saved-line-number))))
-
-;; Require
-(require 'odin-mode)
-(require 'company-go)
-(require 'go-mode)
-
-(use-package rustic
-  :ensure t
-  :config
-  (setq rustic-format-on-save nil)
-  :custom
-  (rustic-cargo-use-last-stored-arguments t))
-
-;; Eglot Odin Config
-(with-eval-after-load 'eglot
-  (add-to-list 'eglot-server-programs '((odin-mode odin-ts-mode) . ("ols"))))

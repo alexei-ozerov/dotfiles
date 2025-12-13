@@ -1,8 +1,4 @@
 ;;;
-;;; ozerova's emacs configuration
-;;;
-;;; compiled from a variety of 3rd party sources while I learn emacs
-;;;
 ;;; 3rd party sources:
 ;;;   * https://github.com/LionyxML/emacs-solo
 ;;;   * https://protesilaos.com/codelog/2024-11-28-basic-emacs-configuration/

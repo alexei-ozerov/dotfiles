@@ -1,8 +1,8 @@
 backups
 
 .config/go/telemetry
+.config/helix/runtime
+.config/nvim/lazy-lock.json
 
 .emacs.d/custom.el
-.emacs.d/**
-
-.config/helix/runtime
+.emacs.d/*/
