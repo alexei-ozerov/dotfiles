@@ -1,3 +1,4 @@
+;;; Initial Setup
 ;; Bootstrap straight.el
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -27,14 +28,13 @@
   (unless (package-archive-contents)
     (package-refresh-contents))
   (package-install 'use-package))
-
 (eval-when-compile (require 'use-package))
 
-;; Defaults
+;;; Defaults
 (use-package emacs 
   :ensure nil
+  
   :custom 
-
   ;; UI
   (inhibit-startup-message t)
   (initial-scratch-message "")
@@ -56,6 +56,11 @@
   ;; Indentation
   (indent-tabs-mode nil)
   (tab-width 4)
+
+  ;; Ripgrep
+  (grep-command "rg -nS --no-heading ")
+  (grep-find-ignored-directories
+   '("SCCS" "RCS" "CVS" "MCVS" ".src" ".svn" ".jj" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "node_modules" "build" "dist"))
   
   ;; Cache paths
   (url-configuration-directory (expand-file-name "cache/url/" user-emacs-directory))
@@ -118,6 +123,7 @@
 ;; Load Custom file
 (load custom-file 'noerror)
 
+;;; Load Packages
 ;; Evil Mode & Keys 
 (use-package evil
   :ensure t
@@ -144,10 +150,32 @@
          (emacs-lisp-mode . evil-cleverparens-mode)
          (sly-mrepl-mode . evil-cleverparens-mode)))
 
-(global-set-key (kbd "C-h") 'windmove-left)
-(global-set-key (kbd "C-l") 'windmove-right)
-(global-set-key (kbd "C-k") 'windmove-up)
-(global-set-key (kbd "C-j") 'windmove-down)
+;; Org Mode
+(use-package org
+  :ensure nil
+  :defer t
+  :hook (org-mode . org-indent-mode)
+  :config
+  (org-babel-do-load-languages 
+   'org-babel-load-languages 
+   '((shell . t)
+     (lisp . t)
+     (emacs-lisp . t)
+     )))
+
+(use-package org-modern
+  :ensure t
+  :hook (org-mode . org-modern-mode)
+  :custom
+  (org-modern-star '("◉" "○" "◈" "◇" "✳" "test")))
+
+(use-package evil-org
+  :ensure t
+  :after org
+  :hook (org-mode . evil-org-mode)
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
 
 ;; Completion
 (use-package vertico
@@ -179,6 +207,11 @@
   (corfu-cycle t)
   :bind (:map corfu-map ("<tab>" . corfu-complete)))
 
+(use-package corfu-terminal
+  :ensure t)
+(unless (display-graphic-p)
+  (corfu-terminal-mode +1))
+
 ;; Icons
 (use-package nerd-icons :ensure t)
 (use-package nerd-icons-completion
@@ -195,26 +228,6 @@
 
 ;; Themes
 (add-to-list 'load-path "~/.emacs.local/")
-; (add-to-list 'load-path "~/.emacs.local/ef-themes")
-;
-; (use-package ef-themes
-;   :ensure t
-;   :config
-;   (setq ef-themes-mixed-fonts t
-;         ef-themes-variable-pitch-ui t)
-;
-;   (defun ef-themes-overrides ()
-;     (custom-set-faces
-;      '(font-lock-function-name-face ((t :weight bold :height 1.1 :inherit ef-themes-function)))
-;      '(font-lock-type-face ((t :slant italic :inherit ef-themes-type)))
-;      '(font-lock-constant-face ((t :weight bold :inherit ef-themes-constant)))
-;      '(font-lock-variable-name-face ((t :inherit ef-themes-variable)))
-;      '(font-lock-property-name-face ((t :slant italic :inherit ef-themes-variable)))))
-;
-;   (add-hook 'ef-themes-post-load-hook #'ef-themes-overrides)
-;
-;   (ef-themes-select 'ef-summer))
-
 (use-package catppuccin-theme
   :ensure t)
 (load-theme 'catppuccin :no-confirm)
@@ -318,25 +331,39 @@
   :mode ("\\.odin\\'" . odin-ts-mode)
   :hook (odin-ts-mode . eglot-ensure))
 
-;; Org Mode
-(use-package org
-  :ensure nil
-  :defer t
-  :hook (org-mode . org-indent-mode)
-  :config
-  (org-babel-do-load-languages 'org-babel-load-languages '((shell . t))))
+;; IRC 
+(use-package circe 
+  :ensure t)
 
-(use-package org-modern
-  :ensure t
-  :hook (org-mode . org-modern-mode)
-  :custom
-  (org-modern-star '("◉" "○" "◈" "◇" "✳" "test")))
+;;; Customization
+(setq eshell-prompt-function
+      '(lambda ()
+         (format "[%s] %s λ "
+                 (format-time-string "%H:%M")
+                 (eshell/pwd))))
 
-(use-package evil-org
-  :ensure t
-  :after org
-  :hook (org-mode . evil-org-mode)
-  :config
-  (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys))
+(defun disable-line-numbers-in-eshell ()
+  "Disable line numbers (both display-line-numbers-mode and linum-mode) in Eshell."
+  (display-line-numbers-mode 0) ; Emacs (>= 26)
+  (linum-mode 0)                ; For older Emacs versions
+  )
+(add-hook 'eshell-mode-hook 'disable-line-numbers-in-eshell)
 
+;; Org Lisp Eval
+(setq org-babel-lisp-eval-fn #'sly-eval)
+
+;; Movement
+(global-set-key (kbd "C-h") 'windmove-left)
+(global-set-key (kbd "C-l") 'windmove-right)
+(global-set-key (kbd "C-k") 'windmove-up)
+(global-set-key (kbd "C-j") 'windmove-down)
+
+;; Rx Aliases
+(rx-define uuid
+  (and
+   (repeat 8 (any "0-9a-f")) "-"
+   (repeat 4 (any "0-9a-f")) "-"
+   (repeat 4 (any "0-9a-f")) "-"
+   (repeat 4 (any "0-9a-f")) "-"
+   (repeat 12 (any "0-9a-f")))
+  )

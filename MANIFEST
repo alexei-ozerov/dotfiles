@@ -1,7 +1,6 @@
 # START MANIFEST
 # Dotfile Symlink Manifest File
-.emacs.d/init.el|active|overwrite|${HOME}
-.emacs.d/early-init.el|active|overwrite|${HOME}
+.emacs.d|active|overwrite|${HOME}
 .config/nvim|active|overwrite|${HOME}
 .config/tmux|active|overwrite|${HOME}
 .config/atuin|active|overwrite|${HOME}

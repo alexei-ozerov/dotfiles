@@ -160,7 +160,7 @@
     },
     "custom/weather": {
         "interval": 600,
-        "exec": "~/.config/waybar/wittr.sh nyiregyhaza",
+        "exec": "~/.config/waybar/wittr.sh Newmarket",
         "return-type": "json",
         "format": "{}",
         "tooltip": true
