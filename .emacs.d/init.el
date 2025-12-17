@@ -18,17 +18,8 @@
 (setq straight-use-package-by-default t)
 (setq package-enable-at-startup nil)
 
-;; Setup MELPA/GNU packages
-(require 'package)
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")))
-(package-initialize)
-
-(unless (package-installed-p 'use-package)
-  (unless (package-archive-contents)
-    (package-refresh-contents))
-  (package-install 'use-package))
-(eval-when-compile (require 'use-package))
+;; Make sure straight doesn't download an older version of project
+(straight-use-package '(project :type built-in))
 
 ;;; Defaults
 (use-package emacs 
@@ -52,6 +43,7 @@
   (backup-directory-alist `(("." . "~/.saves")))
   (auto-save-file-name-transforms `((".*" "~/.saves/" t)))
   (lock-file-name-transforms `((".*" "~/.saves/" t)))
+  (savehist-mode 1)
   
   ;; Indentation
   (indent-tabs-mode nil)
@@ -227,16 +219,13 @@
   :hook (dired-mode . nerd-icons-dired-mode))
 
 ;; Themes
-(add-to-list 'load-path "~/.emacs.local/")
-(use-package catppuccin-theme
-  :ensure t)
+(use-package catppuccin-theme)
 (load-theme 'catppuccin :no-confirm)
 (setq catppuccin-flavor 'mocha) ;; or 'latte, 'macchiato, or 'mocha
 (catppuccin-reload)
 
 ;; Status Bar
 (use-package doom-modeline
-  :ensure t
   :init (doom-modeline-mode 1)
   :custom
   (doom-modeline-height 30)
@@ -255,9 +244,6 @@
   :config (minions-mode 1))
 
 ;; Development
-;; Project Management
-(use-package project :ensure nil)
-
 ;; Git
 (use-package magit
   :ensure t
@@ -280,14 +266,17 @@
   :config
   (add-to-list 'eglot-server-programs '((odin-mode odin-ts-mode) . ("ols"))))
 
-;; Treesitter 
 (use-package treesit-auto
-  :ensure t
   :custom
   (treesit-auto-install 'prompt)
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
+
+;; Go
+(use-package go-mode)
+(add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
+(add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
 
 ;; Sly (CL)
 (use-package sly
@@ -305,11 +294,6 @@
 
 (use-package sly-quicklisp
   :ensure t)
-
-;; Go
-(use-package go-ts-mode
-  :ensure nil
-  :mode "\\.go\\'")
 
 ;; Rust
 (use-package rustic
