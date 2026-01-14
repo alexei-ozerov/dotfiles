@@ -20,6 +20,8 @@
 
 ;; Make sure straight doesn't download an older version of project
 (straight-use-package '(project :type built-in))
+(straight-use-package '(xref :type built-in))
+(straight-use-package '(eldoc :type built-in))
 
 ;;; Defaults
 (use-package emacs 
@@ -71,7 +73,7 @@
 
   :config
 
-  (set-frame-font "Iosevka NF 18" nil t)
+  (set-frame-font "Iosevka NF 14" nil t)
 
   (global-display-line-numbers-mode 1)
   (global-auto-revert-mode 1)
@@ -114,6 +116,9 @@
 
 ;; Load Custom file
 (load custom-file 'noerror)
+
+;; Load Path
+(add-to-list 'exec-path "~/.local/bin")
 
 ;;; Load Packages
 ;; Evil Mode & Keys 
@@ -205,17 +210,14 @@
   (corfu-terminal-mode +1))
 
 ;; Icons
-(use-package nerd-icons :ensure t)
+(use-package nerd-icons)
 (use-package nerd-icons-completion
-  :ensure t
   :after marginalia
   :config (nerd-icons-completion-mode))
 (use-package nerd-icons-corfu
-  :ensure t
   :after corfu
   :config (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 (use-package nerd-icons-dired
-  :ensure t
   :hook (dired-mode . nerd-icons-dired-mode))
 
 ;; Themes
@@ -250,6 +252,19 @@
   :custom
   (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
+;; Terminal 
+(use-package vterm)
+
+;; K8s
+(use-package kubernetes)
+
+;; Treemacs (File Browser)
+(use-package treemacs)
+(use-package treemacs-evil
+  :after treemacs)
+(use-package treemacs-projectile
+  :after treemacs)
+
 ;; Format
 (use-package apheleia
   :ensure t
@@ -257,13 +272,15 @@
 
 ;; LSP (Eglot)
 (use-package eglot
-  :ensure nil ; Built-in since Emacs 29
+  :straight (:type built-in) ;; Use built-in package (>= emacs 29)
   :hook ((go-mode . eglot-ensure)
          (c-mode . eglot-ensure)
          (c++-mode . eglot-ensure)
          (rustic-mode . eglot-ensure)
          (odin-mode . eglot-ensure))
   :config
+  (add-to-list 'eglot-ignored-server-capabilities :documentOnTypeFormattingProvider)
+  (setq-default eglot-stay-out-of '(indentation))
   (add-to-list 'eglot-server-programs '((odin-mode odin-ts-mode) . ("ols"))))
 
 (use-package treesit-auto
@@ -302,6 +319,9 @@
   (rustic-format-on-save nil) ;; handled by apheleia
   (rustic-lsp-client 'eglot))
 
+;; Terraform 
+(use-package terraform-mode)
+
 ;; C/C++
 (use-package c-ts-mode
   :ensure nil
@@ -314,6 +334,11 @@
   :straight (:host github :repo "Sampie159/odin-ts-mode")
   :mode ("\\.odin\\'" . odin-ts-mode)
   :hook (odin-ts-mode . eglot-ensure))
+
+;; Elixir
+(use-package elixir-ts-mode
+  :mode ("\\.exs\\'" . odin-ts-mode)
+  :hook (elixir-ts-mode . eglot-ensure))
 
 ;; IRC 
 (use-package circe 
