@@ -266,6 +266,11 @@
   :after treemacs)
 
 ;; Format
+(setq-default tab-width 4)
+(setq-default indent-tabs-mode t) ; Go requires tabs
+(setq-default go-ts-mode-indent-offset 4)
+(setq-default go-mode-indent-offset 4)
+
 (use-package apheleia
   :ensure t
   :config (apheleia-global-mode +1))
@@ -273,27 +278,37 @@
 ;; LSP (Eglot)
 (use-package eglot
   :straight (:type built-in) ;; Use built-in package (>= emacs 29)
-  :hook ((go-mode . eglot-ensure)
+  :hook ((go-ts-mode . eglot-ensure)
          (c-mode . eglot-ensure)
          (c++-mode . eglot-ensure)
          (rustic-mode . eglot-ensure)
          (odin-mode . eglot-ensure))
   :config
-  (add-to-list 'eglot-ignored-server-capabilities :documentOnTypeFormattingProvider)
   (setq-default eglot-stay-out-of '(indentation))
-  (add-to-list 'eglot-server-programs '((odin-mode odin-ts-mode) . ("ols"))))
+  (add-to-list 'eglot-ignored-server-capabilities :documentOnTypeFormattingProvider))
+  (add-to-list 'eglot-server-programs '((odin-mode odin-ts-mode) . ("ols"
 
 (use-package treesit-auto
   :custom
-  (treesit-auto-install 'prompt)
+  (treesit-auto-install 'prompt
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
 
 ;; Go
-(use-package go-mode)
-(add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
-(add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode))
+(use-package go-ts-mode
+  :ensure nil
+  :mode "\\.go\\'"
+  :hook (go-ts-mode . (lambda ()
+                        (setq-local tab-width 4)
+                        (setq-local indent-tabs-mode t)
+                        (setq-local go-ts-mode-indent-offset 4)
+                        (electric-indent-local-mode -1))))
+
+(use-package go-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
+  (add-hook 'go-ts-mode-hook (lambda () (electric-indent-local-mode -1))))
 
 ;; Sly (CL)
 (use-package sly

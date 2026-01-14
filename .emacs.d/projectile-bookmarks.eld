@@ -1,0 +1,1 @@
+("~/dotfiles/" "~/projects/kuco-rs/" "~/code/engineering/eda-microservices/fee/fee-service/")
