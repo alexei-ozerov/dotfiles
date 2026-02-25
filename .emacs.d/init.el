@@ -337,12 +337,7 @@
 ;;; ──────────────────────────────────────────────
 ;;; Theme & Modeline
 ;;; ──────────────────────────────────────────────
-(use-package catppuccin-theme
-  :ensure t
-  :custom
-  (catppuccin-flavor 'mocha)
-  :config
-  (load-theme 'catppuccin :no-confirm))
+(load-theme 'witch-hazel-hypercolor :no-confirm)
 
 (use-package doom-modeline
   :ensure t
@@ -374,7 +369,9 @@
   :ensure t
   :custom
   (olivetti-body-width 100)
-  :commands olivetti-mode)
+  :commands olivetti-mode
+  :hook ((olivetti-mode-on  . (lambda () (display-line-numbers-mode 0)))
+         (olivetti-mode-off . (lambda () (display-line-numbers-mode 1)))))
 
 ;;; ──────────────────────────────────────────────
 ;;; Org Mode
@@ -646,7 +643,7 @@
              '("\\*eldoc\\*"
                (display-buffer-in-side-window)
                (side . right)
-               (window-width . 0.3)
+               (window-width . 0.5)
                (slot . 0)))
 
 (defvar my/eldoc-lang-config

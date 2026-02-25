@@ -1,0 +1,253 @@
+;;; witch-hazel-hypercolor-theme.el --- Witch Hazel Hypercolor theme -*- lexical-binding: t; -*-
+;;; Ported from the tmTheme provided by theacodes.
+;;; https://github.com/theacodes/witchhazel
+
+(deftheme witch-hazel-hypercolor
+  "A dark & feminine color scheme, ported from the tmTheme created by theacodes.")
+
+(let ((bg          "#282634")
+      (fg          "#F8F8F2")
+      (caret       "#F8F8F0")
+      (selection   "#8077A8")
+      (line-hl     "#131218")
+      (invisibles  "#894E63")
+      (comment     "#BFBFBF")
+      (string      "#81EEFF")
+      (format-spec "#FFA3C3")
+      (number      "#FFF9A3")
+      (constant    "#C5A3FF")
+      (variable    "#F8F8F2")
+      (keyword     "#81FFBE")
+      (storage     "#FFB8D1")
+      (storage-mod "#64BECB")
+      (type        "#81FFBE")
+      (class       "#A3F3FF")
+      (inherited   "#81EEFF")
+      (func-name   "#DCC8FF")
+      (func-arg    "#FFA3C3")
+      (tag         "#FFA3C3")
+      (tag-attr    "#FFF9A3")
+      (lib-func    "#A3FFCF")
+      (lib-const   "#A3FFCF")
+      (lib-type    "#81EEFF")
+      (bracket     "#C8F8FF")
+      (invalid-fg  "#F8F8F0")
+      (invalid-bg  "#F92672")
+      (depr-bg     "#AE81FF")
+      (md-heading  "#FFF781")
+      (md-link     "#C8F8FF")
+      (md-title    "#81FFBE")
+      (md-img      "#C5A3FF")
+      (md-img-desc "#A3F3FF")
+      (md-inline   "#FFFBC8")
+      (md-fenced   "#FF81AD")
+      (md-list     "#AE81FF"))
+
+  (custom-theme-set-faces
+   'witch-hazel-hypercolor
+
+   ;; Basic
+   `(default                          ((t (:background ,bg :foreground ,fg))))
+   `(cursor                           ((t (:background ,caret))))
+   `(region                           ((t (:background ,selection))))
+   `(highlight                        ((t (:background ,line-hl))))
+   `(hl-line                          ((t (:background "#322f3f"))))
+   `(fringe                           ((t (:background ,bg))))
+   `(vertical-border                  ((t (:foreground ,selection))))
+   `(minibuffer-prompt                ((t (:foreground ,keyword :bold t))))
+   `(link                             ((t (:foreground ,md-link :underline t))))
+   `(link-visited                     ((t (:foreground ,constant :underline t))))
+   `(shadow                           ((t (:foreground ,invisibles))))
+   `(trailing-whitespace              ((t (:background ,invalid-bg))))
+   `(lazy-highlight                   ((t (:background ,selection :foreground ,fg))))
+   `(isearch                          ((t (:background ,keyword :foreground ,bg :bold t))))
+   `(isearch-fail                     ((t (:background ,invalid-bg :foreground ,invalid-fg))))
+   `(error                            ((t (:foreground ,invalid-bg :bold t))))
+   `(warning                          ((t (:foreground ,number :bold t))))
+   `(success                          ((t (:foreground ,keyword :bold t))))
+
+   ;; Line numbers
+   `(line-number                      ((t (:foreground ,invisibles :background ,bg))))
+   `(line-number-current-line         ((t (:foreground ,fg :background ,selection :bold t))))
+
+   ;; Font lock
+   `(font-lock-comment-face           ((t (:foreground ,comment))))
+   `(font-lock-comment-delimiter-face ((t (:foreground ,comment))))
+   `(font-lock-doc-face               ((t (:foreground ,comment :italic t))))
+   `(font-lock-string-face            ((t (:foreground ,string))))
+   `(font-lock-constant-face          ((t (:foreground ,constant :bold t))))
+   `(font-lock-number-face            ((t (:foreground ,number))))
+   `(font-lock-keyword-face           ((t (:foreground ,keyword))))
+   `(font-lock-builtin-face           ((t (:foreground ,lib-func))))
+   `(font-lock-type-face              ((t (:foreground ,type :italic t))))
+   `(font-lock-function-name-face     ((t (:foreground ,func-name))))
+   `(font-lock-function-call-face     ((t (:foreground ,func-name))))
+   `(font-lock-variable-name-face     ((t (:foreground ,variable))))
+   `(font-lock-variable-use-face      ((t (:foreground ,variable))))
+   `(font-lock-preprocessor-face      ((t (:foreground ,constant :bold t))))
+   `(font-lock-negation-char-face     ((t (:foreground ,keyword))))
+   `(font-lock-warning-face           ((t (:foreground ,number :bold t))))
+   `(font-lock-regexp-grouping-backslash ((t (:foreground ,format-spec :italic t))))
+   `(font-lock-regexp-grouping-construct ((t (:foreground ,format-spec :italic t))))
+   `(font-lock-escape-face            ((t (:foreground ,format-spec :italic t))))
+   `(font-lock-property-name-face     ((t (:foreground ,fg :italic t))))
+   `(font-lock-property-use-face      ((t (:foreground ,fg :italic t))))
+   `(font-lock-operator-face          ((t (:foreground ,keyword))))
+   `(font-lock-punctuation-face       ((t (:foreground ,fg))))
+   `(font-lock-bracket-face           ((t (:foreground ,bracket))))
+   `(font-lock-delimiter-face         ((t (:foreground ,fg))))
+   `(font-lock-misc-punctuation-face  ((t (:foreground ,fg))))
+
+   ;; Parens
+   `(show-paren-match                 ((t (:background ,selection :foreground ,fg :bold t))))
+   `(show-paren-mismatch              ((t (:background ,invalid-bg :foreground ,invalid-fg))))
+
+   ;; Mode line
+   `(mode-line                        ((t (:background ,line-hl :foreground ,fg :box nil))))
+   `(mode-line-inactive               ((t (:background ,bg :foreground ,comment :box nil))))
+   `(mode-line-emphasis               ((t (:foreground ,keyword :bold t))))
+   `(mode-line-buffer-id              ((t (:foreground ,func-name :bold t))))
+
+   ;; Doom modeline
+   `(doom-modeline-bar                ((t (:background ,keyword))))
+   `(doom-modeline-buffer-file        ((t (:foreground ,fg :bold t))))
+   `(doom-modeline-buffer-modified    ((t (:foreground ,format-spec :bold t))))
+   `(doom-modeline-project-dir        ((t (:foreground ,comment))))
+   `(doom-modeline-info               ((t (:foreground ,keyword))))
+   `(doom-modeline-warning            ((t (:foreground ,number))))
+   `(doom-modeline-urgent             ((t (:foreground ,invalid-bg))))
+
+   ;; Completions (corfu / vertico / marginalia)
+   `(completions-common-part          ((t (:foreground ,keyword :bold t))))
+   `(completions-first-difference     ((t (:foreground ,func-name))))
+   `(corfu-default                    ((t (:background ,line-hl))))
+   `(corfu-current                    ((t (:background ,selection :foreground ,fg))))
+   `(corfu-bar                        ((t (:background ,comment))))
+   `(corfu-border                     ((t (:background ,selection))))
+   `(vertico-current                  ((t (:background ,selection))))
+   `(marginalia-documentation         ((t (:foreground ,comment :italic t))))
+
+   ;; Org mode
+   `(org-level-1                      ((t (:foreground ,md-heading :bold t :height 1.3))))
+   `(org-level-2                      ((t (:foreground ,func-name :bold t :height 1.2))))
+   `(org-level-3                      ((t (:foreground ,keyword :bold t :height 1.1))))
+   `(org-level-4                      ((t (:foreground ,class :bold t))))
+   `(org-level-5                      ((t (:foreground ,format-spec :bold t))))
+   `(org-level-6                      ((t (:foreground ,string :bold t))))
+   `(org-level-7                      ((t (:foreground ,lib-func :bold t))))
+   `(org-level-8                      ((t (:foreground ,constant :bold t))))
+   `(org-document-title               ((t (:foreground ,md-heading :bold t :height 1.4))))
+   `(org-document-info                ((t (:foreground ,comment :italic t))))
+   `(org-todo                         ((t (:foreground ,invalid-bg :bold t))))
+   `(org-done                         ((t (:foreground ,keyword :bold t))))
+   `(org-headline-done                ((t (:foreground ,comment))))
+   `(org-date                         ((t (:foreground ,string :underline t))))
+   `(org-code                         ((t (:foreground ,md-inline))))
+   `(org-verbatim                     ((t (:foreground ,md-fenced))))
+   `(org-block                        ((t (:background ,line-hl))))
+   `(org-block-begin-line             ((t (:foreground ,comment :italic t))))
+   `(org-block-end-line               ((t (:foreground ,comment :italic t))))
+   `(org-table                        ((t (:foreground ,class))))
+   `(org-link                         ((t (:foreground ,md-link :underline t))))
+   `(org-list-dt                      ((t (:foreground ,keyword :bold t))))
+   `(org-checkbox                     ((t (:foreground ,constant :bold t))))
+   `(org-tag                          ((t (:foreground ,comment :italic t))))
+   `(org-meta-line                    ((t (:foreground ,comment))))
+   `(org-special-keyword              ((t (:foreground ,storage-mod))))
+
+   ;; Markdown
+   `(markdown-header-face-1           ((t (:foreground ,md-heading :bold t :height 1.3))))
+   `(markdown-header-face-2           ((t (:foreground ,func-name :bold t :height 1.2))))
+   `(markdown-header-face-3           ((t (:foreground ,keyword :bold t :height 1.1))))
+   `(markdown-header-face-4           ((t (:foreground ,class :bold t))))
+   `(markdown-header-face-5           ((t (:foreground ,format-spec :bold t))))
+   `(markdown-header-face-6           ((t (:foreground ,string :bold t))))
+   `(markdown-bold-face               ((t (:foreground ,fg :bold t))))
+   `(markdown-italic-face             ((t (:foreground ,fg :italic t))))
+   `(markdown-link-face               ((t (:foreground ,md-title :bold t))))
+   `(markdown-url-face                ((t (:foreground ,md-link :italic t))))
+   `(markdown-inline-code-face        ((t (:foreground ,md-inline))))
+   `(markdown-code-face               ((t (:foreground ,md-fenced))))
+   `(markdown-pre-face                ((t (:foreground ,md-fenced))))
+   `(markdown-language-keyword-face   ((t (:foreground ,comment :italic t))))
+   `(markdown-list-face               ((t (:foreground ,md-list))))
+   `(markdown-markup-face             ((t (:foreground ,comment))))
+   `(markdown-link-title-face         ((t (:foreground ,md-img-desc :bold t :italic t))))
+   `(markdown-header-delimiter-face   ((t (:foreground ,md-heading :bold t))))
+
+   ;; Magit
+   `(magit-section-heading            ((t (:foreground ,keyword :bold t))))
+   `(magit-section-highlight          ((t (:background ,line-hl))))
+   `(magit-branch-local               ((t (:foreground ,class :bold t))))
+   `(magit-branch-remote              ((t (:foreground ,keyword :bold t))))
+   `(magit-diff-added                 ((t (:foreground ,keyword :background "#1a2e1a"))))
+   `(magit-diff-added-highlight       ((t (:foreground ,keyword :background "#243a24"))))
+   `(magit-diff-removed               ((t (:foreground ,format-spec :background "#2e1a1a"))))
+   `(magit-diff-removed-highlight     ((t (:foreground ,format-spec :background "#3a2424"))))
+   `(magit-diff-context-highlight     ((t (:background ,line-hl))))
+   `(magit-diff-hunk-heading          ((t (:background ,selection :foreground ,fg))))
+   `(magit-diff-hunk-heading-highlight ((t (:background ,selection :foreground ,fg :bold t))))
+   `(magit-hash                       ((t (:foreground ,comment))))
+   `(magit-log-author                 ((t (:foreground ,class))))
+   `(magit-log-date                   ((t (:foreground ,comment))))
+
+   ;; Diff-hl
+   `(diff-hl-insert                   ((t (:foreground ,keyword :background ,keyword))))
+   `(diff-hl-delete                   ((t (:foreground ,invalid-bg :background ,invalid-bg))))
+   `(diff-hl-change                   ((t (:foreground ,number :background ,number))))
+
+   ;; Eglot
+   `(eglot-highlight-symbol-face      ((t (:background ,selection))))
+   `(eglot-diagnostic-tag-unnecessary-face ((t (:foreground ,comment :italic t))))
+
+   ;; Flycheck / Flymake
+   `(flymake-error                    ((t (:underline (:style wave :color ,invalid-bg)))))
+   `(flymake-warning                  ((t (:underline (:style wave :color ,number)))))
+   `(flymake-note                     ((t (:underline (:style wave :color ,keyword)))))
+
+   ;; Which-key
+   `(which-key-key-face               ((t (:foreground ,keyword :bold t))))
+   `(which-key-group-description-face ((t (:foreground ,class))))
+   `(which-key-command-description-face ((t (:foreground ,fg))))
+   `(which-key-separator-face         ((t (:foreground ,comment))))
+
+   ;; Dired
+   `(dired-directory                  ((t (:foreground ,class :bold t))))
+   `(dired-symlink                    ((t (:foreground ,string :italic t))))
+   `(dired-ignored                    ((t (:foreground ,comment))))
+   `(dired-flagged                    ((t (:foreground ,invalid-bg :bold t))))
+   `(dired-marked                     ((t (:foreground ,keyword :bold t))))
+
+   ;; Avy
+   `(avy-lead-face                    ((t (:background ,invalid-bg :foreground ,invalid-fg :bold t))))
+   `(avy-lead-face-0                  ((t (:background ,constant :foreground ,bg :bold t))))
+   `(avy-lead-face-1                  ((t (:background ,selection :foreground ,fg :bold t))))
+   `(avy-lead-face-2                  ((t (:background ,storage-mod :foreground ,bg :bold t))))
+
+   ;; Evil
+   `(evil-ex-info                     ((t (:foreground ,invalid-bg))))
+   `(evil-ex-substitute-matches       ((t (:background ,invalid-bg :foreground ,invalid-fg :strike-through t))))
+   `(evil-ex-substitute-replacement   ((t (:foreground ,keyword :bold t))))
+
+   ;; Vterm
+   `(vterm-color-black                ((t (:foreground ,line-hl :background ,line-hl))))
+   `(vterm-color-red                  ((t (:foreground ,invalid-bg :background ,invalid-bg))))
+   `(vterm-color-green                ((t (:foreground ,keyword :background ,keyword))))
+   `(vterm-color-yellow               ((t (:foreground ,number :background ,number))))
+   `(vterm-color-blue                 ((t (:foreground ,constant :background ,constant))))
+   `(vterm-color-magenta              ((t (:foreground ,format-spec :background ,format-spec))))
+   `(vterm-color-cyan                 ((t (:foreground ,string :background ,string))))
+   `(vterm-color-white                ((t (:foreground ,fg :background ,fg))))
+
+   ;; Misc
+   `(header-line                      ((t (:background ,line-hl :foreground ,fg))))
+   `(tooltip                          ((t (:background ,line-hl :foreground ,fg))))
+   `(button                           ((t (:foreground ,md-link :underline t))))
+   `(secondary-selection              ((t (:background ,selection))))
+   `(widget-field                     ((t (:background ,line-hl :foreground ,fg))))
+   `(escape-glyph                     ((t (:foreground ,format-spec))))
+   `(homoglyph                        ((t (:foreground ,format-spec))))))
+
+(provide-theme 'witch-hazel-hypercolor)
+
+;;; witch-hazel-hypercolor-theme.el ends here
