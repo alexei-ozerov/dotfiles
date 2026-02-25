@@ -1,80 +1,170 @@
-palette = "catppuccin_mocha"
+# ──────────────────────────────────────────────
+# Starship — Witch Hazel Hypercolor (p10k style)
+# ──────────────────────────────────────────────
 
-format = """
+palette = "witch_hazel"
+
+format = """\
+[](deep_purple)\
 $username\
 $hostname\
+[](bg:purple fg:deep_purple)\
 $directory\
+[](bg:lavender fg:purple)\
 $git_branch\
 $git_state\
 $git_status\
-$cmd_duration\
-$line_break\
+[](bg:rose fg:lavender)\
+$golang\
+$rust\
+$ruby\
+$zig\
 $python\
+$lua\
+$c\
+[](bg:teal fg:rose)\
+$terraform\
+$docker_context\
 $direnv\
+[](fg:teal)\
+$fill\
+$cmd_duration\
+$kubernetes\
+$line_break\
 $character"""
 
-[direnv]
-disabled = false
+[fill]
+symbol = ' '
+
+[username]
+format = '[$user ]($style)'
+style_user = 'bg:deep_purple fg:bg bold'
+style_root = 'bg:red fg:bg bold'
+show_always = false
+
+[hostname]
+format = '[@$hostname ]($style)'
+style = 'bg:deep_purple fg:bg'
+ssh_only = true
 
 [directory]
-style = "blue"
-
-[character]
-success_symbol = "[λ](purple)"
-error_symbol = "[λ](red)"
-vimcmd_symbol = "[λ](green)"
+format = '[ $path ]($style)[$read_only]($read_only_style)'
+style = 'bg:purple fg:bg bold'
+read_only = '󰌾'
+read_only_style = 'bg:purple fg:bg'
+truncation_length = 3
+truncation_symbol = '...'
 
 [git_branch]
-format = "[$branch]($style)"
-style = "bright-black"
+format = '[ $symbol$branch ]($style)'
+symbol = ' '
+style = 'bg:lavender fg:bg'
 
 [git_status]
-format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)"
-style = "cyan"
-conflicted = "​"
-untracked = "​"
-modified = "​"
-staged = "​"
-renamed = "​"
-deleted = "​"
-stashed = "≡"
+format = '[$all_status$ahead_behind]($style)'
+style = 'bg:lavender fg:bg'
+conflicted = '=${count} '
+untracked = '?${count} '
+modified = '!${count} '
+staged = '+${count} '
+renamed = '»${count} '
+deleted = '✘${count} '
+stashed = '*${count} '
+ahead = '⇡${count} '
+behind = '⇣${count} '
+diverged = '⇕⇡${ahead_count}⇣${behind_count} '
 
 [git_state]
-format = '\([$state( $progress_current/$progress_total)]($style)\) '
-style = "bright-black"
+format = '[\($state( $progress_current/$progress_total)\)]($style) '
+style = 'bg:lavender fg:bg italic'
 
-[cmd_duration]
-format = "[$duration]($style) "
-style = "yellow"
+[golang]
+format = '[ Go $version ]($style)'
+style = 'bg:rose fg:bg'
+
+[rust]
+format = '[ Rs $version ]($style)'
+style = 'bg:rose fg:bg'
+
+[ruby]
+format = '[ Rb $version ]($style)'
+style = 'bg:rose fg:bg'
+
+[zig]
+format = '[ Zig $version ]($style)'
+style = 'bg:rose fg:bg'
 
 [python]
-format = "[$virtualenv]($style) "
-style = "bright-black"
+format = '[ Py $version( $virtualenv) ]($style)'
+symbol = ''
+style = 'bg:rose fg:bg'
 
-[palettes.catppuccin_mocha]
-rosewater = "#f5e0dc"
-flamingo = "#f2cdcd"
-pink = "#f5c2e7"
-mauve = "#cba6f7"
-red = "#f38ba8"
-maroon = "#eba0ac"
-peach = "#fab387"
-yellow = "#f9e2af"
-green = "#a6e3a1"
-teal = "#94e2d5"
-sky = "#89dceb"
-sapphire = "#74c7ec"
-blue = "#89b4fa"
-lavender = "#b4befe"
-text = "#cdd6f4"
-subtext1 = "#bac2de"
-subtext0 = "#a6adc8"
-overlay2 = "#9399b2"
-overlay1 = "#7f849c"
-overlay0 = "#6c7086"
-surface2 = "#585b70"
-surface1 = "#45475a"
-surface0 = "#313244"
-base = "#1e1e2e"
-mantle = "#181825"
-crust = "#11111b"
+[lua]
+format = '[ Lua $version ]($style)'
+style = 'bg:rose fg:bg'
+
+[c]
+format = '[ C $version ]($style)'
+style = 'bg:rose fg:bg'
+
+[terraform]
+format = '[ tf:$workspace ]($style)'
+style = 'bg:teal fg:bg'
+
+[docker_context]
+format = '[ dk:$context ]($style)'
+style = 'bg:teal fg:bg'
+
+[direnv]
+format = '[ direnv ]($style)'
+symbol = ''
+style = 'bg:teal fg:bg'
+disabled = false
+
+[kubernetes]
+format = '[](fg:selection)[ ⎈ $context:$namespace ](bg:selection fg:fg)[](fg:selection)'
+disabled = false
+
+[[kubernetes.contexts]]
+context_pattern = 'arn:aws:eks:.*:.*:cluster/(?P<name>.*)'
+context_alias = '$name'
+
+[[kubernetes.contexts]]
+context_pattern = '(?P<name>.{23}).{2,}'
+context_alias = '${name}..'
+
+[cmd_duration]
+format = '[](fg:surface)[ $duration ](bg:surface fg:comment)[](fg:surface) '
+min_time = 2_000
+
+[character]
+success_symbol = '[λ](ice bold)'
+error_symbol = '[λ](pink bold)'
+vimcmd_symbol = '[λ](lavender bold)'
+
+[line_break]
+disabled = false
+
+# ──────────────────────────────────────────────
+# Witch Hazel Palette
+# ──────────────────────────────────────────────
+
+[palettes.witch_hazel]
+bg = '#282634'
+fg = '#F8F8F2'
+purple = '#C5A3FF'
+deep_purple = '#AE81FF'
+pink = '#FFA3C3'
+green = '#81FFBE'
+cyan = '#81EEFF'
+yellow = '#FFF9A3'
+lavender = '#DCC8FF'
+mint = '#A3FFCF'
+rose = '#FFB8D1'
+teal = '#64BECB'
+ice = '#A3F3FF'
+red = '#F92672'
+selection = '#8077A8'
+comment = '#BFBFBF'
+line_hl = '#131218'
+surface = '#322f3f'
